@@ -65,8 +65,6 @@ find -type d -name CVS|xargs rm -rf
 %build
 %configure2_5x	--with-pic \
 		--with-cfgtk=gtk \
-		--with-platform=SDL \
-		--with-gl-support=SDL \
 		--disable-cg \
 		--enable-openexr
 %make
