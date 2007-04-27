@@ -18,8 +18,8 @@ License:	LGPL
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
 Summary:	Object-Oriented Graphics Rendering Engine
-BuildRequires:	zlib-devel devil-devel >= 1.6.6-3mdk X11-devel MesaGLU-devel
-BuildRequires:	jpeg-devel mng-devel tiff-devel SDL-devel lcms-devel nas-devel
+BuildRequires:	X11-devel MesaGLU-devel	SDL-devel
+BuildRequires:	freeimage-devel lcms-devel nas-devel
 BuildRequires:	gtkmm2.4-devel libglademm2.4-devel zziplib-devel
 BuildRequires:	OpenEXR-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
