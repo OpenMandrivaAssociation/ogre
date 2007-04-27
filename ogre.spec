@@ -1,10 +1,10 @@
 %define	oname		OGRE
 %define	name		ogre
-%define	version		1.2.5
+%define	version		1.4.0
 %define rel		1
 %define	release		%mkrel %rel
 
-%define	major		13
+%define	major		14
 %define	lib_name_orig	lib%{name}
 %define	lib_name	%mklibname %{name} %{major}
 %define	lib_name_devel	%mklibname %{name} %{major} -d
