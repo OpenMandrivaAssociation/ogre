@@ -4,10 +4,10 @@
 %define rel		1
 %define	release		%mkrel %rel
 
-%define	major		14
+%define uversion %(echo %{version}| tr . _)
 %define	lib_name_orig	lib%{name}
-%define	lib_name	%mklibname %{name} %{major}
-%define	lib_name_devel	%mklibname %{name} %{major} -d
+%define	lib_name	%mklibname %{name} %{uversion}
+%define	lib_name_devel	%mklibname %{name} %{uversion} -d
 %{expand:%%define filever %(echo v%{version}| tr . -)}
 
 Name:		%{name}
@@ -84,7 +84,7 @@ rm -rf %{buildroot}
 %doc AUTHORS BUGS LINUX.DEV
 %defattr(-,root,root)
 %{_bindir}/*
-%{_libdir}/*.so.%{major}*
+%{_libdir}/libOgreMain-%{version}.so
 %{_libdir}/%{oname}
 %{_datadir}/%{oname}
 
@@ -92,8 +92,8 @@ rm -rf %{buildroot}
 %defattr(644,root,root,755)
 %doc Docs/*
 %defattr(-,root,root)
-%{_libdir}/lib*.so
-%{_libdir}/*.la
+%{_libdir}/libOgreMain.so
+%{_libdir}/libOgreMain.la
 %{_libdir}/pkgconfig/%{oname}.pc
 %{_includedir}/%{oname}
 
