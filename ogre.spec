@@ -71,7 +71,7 @@ find -type d -name CVS|xargs rm -rf
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std
+%makeinstall
 
 %post -n %{lib_name} -p /sbin/ldconfig
 %postun -n %{lib_name} -p /sbin/ldconfig
