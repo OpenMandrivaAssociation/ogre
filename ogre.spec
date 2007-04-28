@@ -35,8 +35,6 @@ objects and other intuitive classes.
 %package -n	%{lib_name}
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
-Provides:	%{lib_name_orig}
-Provides:	%{name}
 Obsoletes:	%mklibname ogre 5
 
 %description -n	%{lib_name}
