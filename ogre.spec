@@ -36,7 +36,7 @@ objects and other intuitive classes.
 %package -n	%{lib_name}
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
-Obsoletes:	%mklibname ogre 5
+Obsoletes:	%mklibname ogre 13
 
 %description -n	%{lib_name}
 OGRE  (Object-Oriented  Graphics  Rendering  Engine)  is a scene-oriented,
@@ -52,7 +52,7 @@ Group:		Development/C++
 Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%mklibname -d ogre 5
+Obsoletes:	%mklibname -d ogre 13
 
 %description -n	%{lib_name_devel}
 Development headers and libraries for writing programs using %{oname}
