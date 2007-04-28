@@ -86,7 +86,6 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_libdir}/libOgreMain-%{version}.so
 %{_libdir}/%{oname}
-%{_datadir}/%{oname}
 
 %files -n %{lib_name_devel}
 %defattr(644,root,root,755)
