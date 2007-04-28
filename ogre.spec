@@ -77,11 +77,14 @@ rm -rf %{buildroot}
 %clean
 rm -rf %{buildroot}
 
-%files -n %{lib_name}
+%files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS
 %defattr(-,root,root)
 %{_bindir}/*
+
+%files -n %{lib_name}
+%defattr(-,root,root)
 %{_libdir}/libOgreMain-%{version}.so
 %{_libdir}/%{oname}
 
