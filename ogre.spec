@@ -23,6 +23,7 @@ BuildRequires:	freeimage-devel lcms-devel nas-devel
 BuildRequires:	gtkmm2.4-devel libglademm2.4-devel zziplib-devel
 BuildRequires:	OpenEXR-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Conflicts:	libogre
 
 %description
 OGRE  (Object-Oriented  Graphics  Rendering  Engine)  is a scene-oriented,
