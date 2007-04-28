@@ -81,7 +81,7 @@ rm -rf %{buildroot}
 
 %files -n %{lib_name}
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS LINUX.DEV
+%doc AUTHORS BUGS
 %defattr(-,root,root)
 %{_bindir}/*
 %{_libdir}/libOgreMain-%{version}.so
@@ -89,7 +89,7 @@ rm -rf %{buildroot}
 
 %files -n %{lib_name_devel}
 %defattr(644,root,root,755)
-%doc Docs/*
+%doc Docs/* LINUX.DEV
 %defattr(-,root,root)
 %{_libdir}/libOgreMain.so
 %{_libdir}/libOgreMain.la
