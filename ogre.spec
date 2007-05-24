@@ -1,6 +1,6 @@
 %define	oname		OGRE
 %define	name		ogre
-%define	version		1.4.0
+%define	version		1.4.1
 %define rel		1
 %define	release		%mkrel %rel
 
@@ -61,6 +61,11 @@ Development headers and libraries for writing programs using %{oname}
 %setup -q -n %{name}new
 find -type d -name CVS|xargs rm -rf
 
+# Correct path to lib dir (suggested by Peter Chapman)
+perl -pi -e 's,/usr/local/lib,%_libdir,g' Samples/Common/bin/plugins.cfg
+# Don't include this plugin as it's not built (Peter Chapman)
+perl -pi -e 's,Plugin=Plugin_CgProgramManager.so,,g' Samples/Common/bin/plugins.cfg
+
 %build
 %configure2_5x	--with-pic \
 		--with-cfgtk=gtk \
@@ -91,7 +96,7 @@ rm -rf %{buildroot}
 
 %files -n %{lib_name_devel}
 %defattr(644,root,root,755)
-%doc Docs/* LINUX.DEV
+%doc Docs/* LINUX.DEV Samples
 %defattr(-,root,root)
 %{_libdir}/libOgreMain.so
 %{_libdir}/libOgreMain.la
