@@ -1,20 +1,20 @@
 %define	oname		OGRE
 %define	name		ogre
-%define	version		1.4.1
+%define	version		1.4.4
 %define rel		1
 %define	release		%mkrel %rel
 
 %define uversion %(echo %{version}| tr . _)
 %define	lib_name_orig	lib%{name}
 %define	lib_name	%mklibname %{name} %{uversion}
-%define	lib_name_devel	%mklibname %{name} %{uversion} -d
+%define	lib_name_devel	%mklibname %{name} -d
 %{expand:%%define filever %(echo v%{version}| tr . -)}
 
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	%{name}-linux_osx-%{filever}.tar.bz2
-License:	LGPL
+License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
 Summary:	Object-Oriented Graphics Rendering Engine
@@ -53,6 +53,7 @@ Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d ogre 13
+Obsoletes:	%mklibname ogre 1_4_1 -d
 
 %description -n	%{lib_name_devel}
 Development headers and libraries for writing programs using %{oname}
@@ -88,11 +89,11 @@ rm -rf %{buildroot}
 %doc AUTHORS BUGS
 %defattr(-,root,root)
 %{_bindir}/*
+%{_libdir}/%{oname}
 
 %files -n %{lib_name}
 %defattr(-,root,root)
 %{_libdir}/libOgreMain-%{version}.so
-%{_libdir}/%{oname}
 
 %files -n %{lib_name_devel}
 %defattr(644,root,root,755)
@@ -102,5 +103,4 @@ rm -rf %{buildroot}
 %{_libdir}/libOgreMain.la
 %{_libdir}/pkgconfig/%{oname}.pc
 %{_includedir}/%{oname}
-
 
