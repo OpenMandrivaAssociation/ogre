@@ -1,6 +1,6 @@
 %define	oname		OGRE
 %define	name		ogre
-%define	version		1.4.4
+%define	version		1.4.5
 %define rel		1
 %define	release		%mkrel %rel
 
@@ -52,8 +52,8 @@ Group:		Development/C++
 Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%mklibname -d ogre 13
-Obsoletes:	%mklibname ogre 1_4_1 -d
+Obsoletes:	%mklibname -d %{name} 13
+Obsoletes:	%mklibname %{name} 1_4_1 -d
 
 %description -n	%{lib_name_devel}
 Development headers and libraries for writing programs using %{oname}
@@ -94,13 +94,18 @@ rm -rf %{buildroot}
 %files -n %{lib_name}
 %defattr(-,root,root)
 %{_libdir}/libOgreMain-%{version}.so
+%{_libdir}/libCEGUIOgreRenderer-%{version}.so
 
 %files -n %{lib_name_devel}
 %defattr(644,root,root,755)
 %doc Docs/* LINUX.DEV Samples
 %defattr(-,root,root)
 %{_libdir}/libOgreMain.so
+%{_libdir}/libCEGUIOgreRenderer.so
 %{_libdir}/libOgreMain.la
+%{_libdir}/libCEGUIOgreRenderer.la
 %{_libdir}/pkgconfig/%{oname}.pc
+%{_libdir}/pkgconfig/CEGUI-%{oname}.pc
+
 %{_includedir}/%{oname}
 
