@@ -94,18 +94,13 @@ rm -rf %{buildroot}
 %files -n %{lib_name}
 %defattr(-,root,root)
 %{_libdir}/libOgreMain-%{version}.so
-%{_libdir}/libCEGUIOgreRenderer-%{version}.so
 
 %files -n %{lib_name_devel}
 %defattr(644,root,root,755)
 %doc Docs/* LINUX.DEV Samples
 %defattr(-,root,root)
 %{_libdir}/libOgreMain.so
-%{_libdir}/libCEGUIOgreRenderer.so
 %{_libdir}/libOgreMain.la
-%{_libdir}/libCEGUIOgreRenderer.la
 %{_libdir}/pkgconfig/%{oname}.pc
-%{_libdir}/pkgconfig/CEGUI-%{oname}.pc
-
 %{_includedir}/%{oname}
 
