@@ -1,6 +1,6 @@
 %define	oname		OGRE
 %define	name		ogre
-%define	version		1.4.5
+%define	version		1.4.6
 %define rel		1
 %define	release		%mkrel %rel
 
