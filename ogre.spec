@@ -153,7 +153,7 @@ rm -rf %{buildroot}
 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc Docs/* LINUX.DEV Samples
+%doc Docs/* LINUX.DEV
 %defattr(-,root,root)
 %{_libdir}/libOgreMain.so
 %{_libdir}/libOgreMain.la
