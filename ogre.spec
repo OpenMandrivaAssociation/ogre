@@ -165,4 +165,4 @@ rm -rf %{buildroot}
 %files samples
 %defattr(-,root,root)
 %{_bindir}/%{name}-*
-%{_libdir}/%{name}/Samples
+%{_datadir}/%{name}/Samples
