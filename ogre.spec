@@ -1,6 +1,6 @@
 %define	oname OGRE
 %define name ogre
-%define version 1.4.7
+%define version 1.4.8
 %define uversion %(echo %{version}| tr . _)
 %define libname %mklibname %{name} %{uversion}
 %define	develname %mklibname %{name} -d
@@ -13,7 +13,7 @@ Release:	%mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
-Source0:	http://downloads.sourceforge.net/ogre/%{name}-linux_osx-%{filever}.tar.bz2
+Source0:	http://downloads.sourceforge.net/ogre/%{name}-%{filever}.tar.bz2
 Patch0:		ogre-1.2.1-rpath.patch
 Patch1:		ogre-1.4.6-system-glew.patch
 BuildRequires:	X11-devel
@@ -76,7 +76,7 @@ Group:		System/Libraries
 Samples for %{oname}.
 
 %prep
-%setup -q -n %{name}new
+%setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
 
