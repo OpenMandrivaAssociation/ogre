@@ -34,6 +34,7 @@ BuildRequires:	flex
 BuildRequires:	CEGUI-devel
 BuildRequires:	ois-devel
 BuildRequires:	glew-devel
+BuildRequires:	libtool
 Conflicts:	libogre
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
