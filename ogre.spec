@@ -95,9 +95,10 @@ sed -i -e 's|../../Media|%{_datadir}/%{name}/Samples|g' Samples/Common/bin/resou
 sed -i -e 's|/usr/local|%{_libdir}|g' Samples/Common/bin/quake3settings.cfg
 
 %build
+./bootstrap
 %configure2_5x	\
 	--with-pic \
-	--with-cfgtk=gtk \
+	--with-gui=gtk \
 	--disable-cg \
 	--enable-openexr
 
