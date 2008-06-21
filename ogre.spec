@@ -16,6 +16,8 @@ URL:		http://www.ogre3d.org/
 Source0:	http://downloads.sourceforge.net/ogre/%{name}-%{filever}.tar.bz2
 Patch0:		ogre-1.2.1-rpath.patch
 Patch1:		ogre-1.4.6-system-glew.patch
+Patch2:		ogre-1.4.9-as-needed.patch
+Patch3:		ogre-1.4.9-cegui.patch
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
 BuildRequires:	SDL-devel
@@ -79,6 +81,8 @@ Samples for %{oname}.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p0
+%patch3 -p0
 
 find -type d -name CVS|xargs rm -rf
 
