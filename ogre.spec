@@ -1,5 +1,4 @@
 %define	oname OGRE
-%define name ogre
 %define version 1.4.9
 %define uversion %(echo %{version}| tr . _)
 %define libname %mklibname %{name} %{uversion}
@@ -7,7 +6,7 @@
 %define filever %(echo v%{version}| tr . -)
 
 Summary:	Object-Oriented Graphics Rendering Engine
-Name:		%{name}
+Name:		ogre
 Version:	%{version}
 Release:	%mkrel 2
 License:	LGPLv2+
@@ -35,7 +34,7 @@ BuildRequires:	CEGUI-devel
 BuildRequires:	ois-devel
 BuildRequires:	glew-devel
 BuildRequires:	libtool
-Conflicts:	libogre
+Conflicts:	libogre < 1.4.9
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -96,6 +95,8 @@ sed -i -e 's|../../Media|%{_datadir}/%{name}/Samples|g' Samples/Common/bin/resou
 sed -i -e 's|/usr/local|%{_libdir}|g' Samples/Common/bin/quake3settings.cfg
 
 %build
+%define _disable_ld_no_undefined 1
+
 ./bootstrap
 %configure2_5x	\
 	--with-pic \
