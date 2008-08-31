@@ -8,7 +8,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
@@ -95,14 +95,15 @@ sed -i -e 's|../../Media|%{_datadir}/%{name}/Samples|g' Samples/Common/bin/resou
 sed -i -e 's|/usr/local|%{_libdir}|g' Samples/Common/bin/quake3settings.cfg
 
 %build
-%define _disable_ld_no_undefined 1
+%define _disable_ld_no_undefined 0
 
 ./bootstrap
 %configure2_5x	\
 	--with-pic \
 	--with-gui=gtk \
 	--disable-cg \
-	--enable-openexr
+	--enable-openexr \
+	--disable-devil
 
 # Don't use rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
