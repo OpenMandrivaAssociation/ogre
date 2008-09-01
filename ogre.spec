@@ -8,7 +8,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
@@ -17,6 +17,7 @@ Patch0:		ogre-1.2.1-rpath.patch
 Patch1:		ogre-1.4.6-system-glew.patch
 Patch2:		ogre-1.4.9-as-needed.patch
 Patch3:		ogre-1.4.9-cegui.patch
+Patch4:		ogre-1.4.7-system-tinyxml.patch
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
 BuildRequires:	SDL-devel
@@ -83,8 +84,14 @@ Samples for %{oname}.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p0
+%patch4 -p1
 
 find -type d -name CVS|xargs rm -rf
+
+#be sure we won't use bundled glew
+rm -rf RenderSystems/GL/include/GL/*
+# remove included tinyxml headers to ensure use of system headers
+rm Tools/XMLConverter/include/tiny*
 
 # Correct path to lib dir (suggested by Peter Chapman)
 perl -pi -e 's|/usr/local/lib|%{_libdir}|g' Samples/Common/bin/plugins.cfg
