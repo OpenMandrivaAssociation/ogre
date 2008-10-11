@@ -8,7 +8,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
