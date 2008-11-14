@@ -8,7 +8,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
@@ -27,7 +27,6 @@ BuildRequires:	nas-devel
 BuildRequires:	gtkmm2.4-devel
 BuildRequires:	libglademm2.4-devel
 BuildRequires:	zziplib-devel
-BuildRequires:	OpenEXR-devel
 BuildRequires:	cppunit-devel
 BuildRequires:	bison
 BuildRequires:	flex
@@ -79,24 +78,33 @@ Group:		System/Libraries
 Samples for %{oname}.
 
 %prep
+
 %setup -q -n %{name}
+
+find -type d -name CVS|xargs rm -rf
+
+# fix wrong permissions
+find Docs -type d | xargs chmod 755
+find Docs -type f | xargs chmod 644
+
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
 %patch3 -p0
 %patch4 -p1
 
-find -type d -name CVS|xargs rm -rf
-
 #be sure we won't use bundled glew
 rm -rf RenderSystems/GL/include/GL/*
+
 # remove included tinyxml headers to ensure use of system headers
 rm Tools/XMLConverter/include/tiny*
 
 # Correct path to lib dir (suggested by Peter Chapman)
 perl -pi -e 's|/usr/local/lib|%{_libdir}|g' Samples/Common/bin/plugins.cfg
+
 # Don't include this plugin as it's not built (Peter Chapman)
 perl -pi -e 's|Plugin=Plugin_CgProgramManager.so||g' Samples/Common/bin/plugins.cfg
+
 # (tpg) fix paths
 sed -i -e 's|../../Media|%{_datadir}/%{name}/Samples|g' Samples/Common/bin/resources.cfg
 sed -i -e 's|/usr/local|%{_libdir}|g' Samples/Common/bin/quake3settings.cfg
@@ -109,7 +117,7 @@ sed -i -e 's|/usr/local|%{_libdir}|g' Samples/Common/bin/quake3settings.cfg
 	--with-pic \
 	--with-gui=gtk \
 	--disable-cg \
-	--enable-openexr \
+	--disable-openexr \
 	--disable-devil
 
 # Don't use rpath!
