@@ -171,6 +171,7 @@ rm -rf %{buildroot}
 %doc AUTHORS BUGS
 %defattr(-,root,root)
 %{_bindir}/Ogre*
+%{_bindir}/rcapsdump
 %{_libdir}/%{oname}/*
 
 %files -n %{libname}
