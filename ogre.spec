@@ -111,6 +111,7 @@ sed -i -e 's|/usr/local|%{_libdir}|g' Samples/Common/bin/quake3settings.cfg
 
 %build
 %define _disable_ld_no_undefined 0
+%define Werror_cflags %nil
 
 ./bootstrap
 %configure2_5x	\
