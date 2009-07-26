@@ -1,5 +1,5 @@
 %define	oname OGRE
-%define version 1.6.1
+%define version 1.6.2
 %define uversion %(echo %{version}| tr . _)
 %define libname %mklibname %{name} %{uversion}
 %define	develname %mklibname %{name} -d
