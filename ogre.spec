@@ -1,5 +1,5 @@
 %define	oname OGRE
-%define version 1.6.2
+%define version 1.6.3
 %define uversion %(echo %{version}| tr . _)
 %define libname %mklibname %{name} %{uversion}
 %define	develname %mklibname %{name} -d
@@ -14,10 +14,10 @@ Group:		System/Libraries
 URL:		http://www.ogre3d.org/
 Source0:	http://downloads.sourceforge.net/ogre/%{name}-%{filever}.tar.bz2
 Patch0:		ogre-1.2.1-rpath.patch
-Patch1:		ogre-1.4.6-system-glew.patch
+Patch1:		ogre-1.6.3-system-glew.patch
 Patch2:		ogre-1.4.9-as-needed.patch
 Patch3:		ogre-1.4.9-cegui.patch
-Patch4:		ogre-1.4.7-system-tinyxml.patch
+Patch4:		ogre-1.6.3-system-tinyxml.patch
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
 BuildRequires:	SDL-devel
