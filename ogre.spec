@@ -30,7 +30,7 @@ BuildRequires:	zziplib-devel
 BuildRequires:	cppunit-devel
 BuildRequires:	bison
 BuildRequires:	flex
-BuildRequires:	CEGUI-devel
+BuildRequires:	CEGUI0.6-devel
 BuildRequires:	ois-devel
 BuildRequires:	glew-devel
 BuildRequires:	libtool
