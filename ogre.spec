@@ -8,7 +8,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
@@ -66,6 +66,7 @@ Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d %{name} 13
 Obsoletes:	%mklibname %{name} 1_4_1 -d
+Requires:	%{_lib}CEGUI0.6-devel
 
 %description -n	%{develname}
 Development headers and libraries for writing programs using %{oname}
@@ -78,7 +79,6 @@ Group:		System/Libraries
 Samples for %{oname}.
 
 %prep
-
 %setup -q -n %{name}
 
 find -type d -name CVS|xargs rm -rf
