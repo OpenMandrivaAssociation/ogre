@@ -29,7 +29,7 @@ BuildRequires:	CEGUI0.6-devel
 BuildRequires:	ois-devel
 BuildRequires:	glew-devel
 BuildRequires:	cmake
-BuildRequires:	boost
+BuildRequires:	boost-devel
 Conflicts:	libogre < 1.4.9
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
