@@ -13,23 +13,19 @@ License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_%{filever}.tar.bz2
-BuildRequires:	X11-devel
-BuildRequires:	MesaGLU-devel
-BuildRequires:	SDL-devel
+BuildRequires:	libx11-devel
+BuildRequires:	libxaw-devel
+BuildRequires:	libxrandr-devel
+BuildRequires:	libxt-devel
+BuildRequires:	mesagl-devel
+BuildRequires:	mesaglu-devel
+BuildRequires:	ois-devel
+BuildRequires:	boost-devel
 BuildRequires:	freeimage-devel
-BuildRequires:	lcms-devel
-BuildRequires:	nas-devel
-BuildRequires:	gtkmm2.4-devel
-BuildRequires:	libglademm2.4-devel
+BuildRequires:	freetype2-devel
 BuildRequires:	zziplib-devel
 BuildRequires:	cppunit-devel
-BuildRequires:	bison
-BuildRequires:	flex
-BuildRequires:	CEGUI0.6-devel
-BuildRequires:	ois-devel
-BuildRequires:	glew-devel
 BuildRequires:	cmake
-BuildRequires:	boost-devel
 Conflicts:	libogre < 1.4.9
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -62,7 +58,6 @@ Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d %{name} 13
 Obsoletes:	%mklibname %{name} 1_4_1 -d
-Requires:	%{_lib}CEGUI0.6-devel
 
 %description -n	%{develname}
 Development headers and libraries for writing programs using %{oname}
@@ -78,7 +73,7 @@ Samples for %{oname}.
 %setup -qn %{name}_src_%{filever}
 
 %build
-%cmake -DOGRE_INSTALL_SAMPLES:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
+%cmake -DOGRE_INSTALL_SAMPLES:BOOL=ON
 %make
 
 %install
