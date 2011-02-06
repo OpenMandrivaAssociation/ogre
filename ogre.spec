@@ -1,5 +1,5 @@
 %define	oname OGRE
-%define version 1.6.5
+%define version 1.7.2
 %define uversion %(echo %{version}| tr . _)
 %define libname %mklibname %{name} %{uversion}
 %define	develname %mklibname %{name} -d
@@ -8,16 +8,11 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 4
+Release:	%mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
-Source0:	http://downloads.sourceforge.net/ogre/%{name}-%{filever}.tar.bz2
-Patch0:		ogre-1.2.1-rpath.patch
-Patch1:		ogre-1.6.3-system-glew.patch
-Patch2:		ogre-1.4.9-as-needed.patch
-Patch3:		ogre-1.4.9-cegui.patch
-Patch4:		ogre-1.6.3-system-tinyxml.patch
+Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_%{filever}.tar.bz2
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
 BuildRequires:	SDL-devel
@@ -33,7 +28,8 @@ BuildRequires:	flex
 BuildRequires:	CEGUI0.6-devel
 BuildRequires:	ois-devel
 BuildRequires:	glew-devel
-BuildRequires:	libtool
+BuildRequires:	cmake
+BuildRequires:	boost
 Conflicts:	libogre < 1.4.9
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -79,83 +75,15 @@ Group:		System/Libraries
 Samples for %{oname}.
 
 %prep
-%setup -q -n %{name}
-
-find -type d -name CVS|xargs rm -rf
-
-# fix wrong permissions
-find Docs -type d | xargs chmod 755
-find Docs -type f | xargs chmod 644
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p0
-%patch3 -p0
-%patch4 -p1
-
-#be sure we won't use bundled glew
-rm -rf RenderSystems/GL/include/GL/*
-
-# remove included tinyxml headers to ensure use of system headers
-rm Tools/XMLConverter/include/tiny*
-
-# Correct path to lib dir (suggested by Peter Chapman)
-perl -pi -e 's|/usr/local/lib|%{_libdir}|g' Samples/Common/bin/plugins.cfg
-
-# Don't include this plugin as it's not built (Peter Chapman)
-perl -pi -e 's|Plugin=Plugin_CgProgramManager.so||g' Samples/Common/bin/plugins.cfg
-
-# (tpg) fix paths
-sed -i -e 's|../../Media|%{_datadir}/%{name}/Samples|g' Samples/Common/bin/resources.cfg
-sed -i -e 's|/usr/local|%{_libdir}|g' Samples/Common/bin/quake3settings.cfg
+%setup -qn %{name}_src_%{filever}
 
 %build
-%define _disable_ld_no_undefined 0
-%define Werror_cflags %nil
-
-./bootstrap
-%configure2_5x	\
-	--with-pic \
-	--with-gui=gtk \
-	--disable-cg \
-	--disable-openexr \
-	--disable-devil
-
-# Don't use rpath!
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-sed -i 's|-L%{_libdir}||g' `find -name Makefile`
-
+%cmake -DOGRE_INSTALL_SAMPLES:BOOL=ON -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
 %make
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std
-
-# copy some forgotten headers ... (ogre4j needs them)
-install -dm 755 %{buildroot}%{_includedir}/OGRE
-install -m 644 OgreMain/include/OgreOptimisedUtil.h %{buildroot}%{_includedir}/OGRE
-install -m 644 OgreMain/include/OgrePlatformInformation.h %{buildroot}%{_includedir}/OGRE
-
-# (tpg) install samples
-install -dm 755 %{buildroot}%{_datadir}/ogre/Samples
-cp -R Samples/Media/* %{buildroot}%{_datadir}/ogre/Samples
-install -m 644 Samples/Common/bin/*.cfg %{buildroot}%{_datadir}/ogre/Samples
-
-# (tpg) move samples binaries to the right place
-pushd %{buildroot}`pwd`/Samples/Common/bin
-demo_list=`ls -1`
-    for i in $demo_list; do
-	install -m 755 $i %{buildroot}%{_bindir}/%{name}-$i
-    done
-popd
-
-rm -rf %{buildroot}`pwd`/Samples/Common/bin
-
-# (tpg) remove useless docs
-rm -rf Docs/Samples
-rm -rf Docs/src
-rm -rf Docs/shadows/src
+%makeinstall_std -C build
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -171,27 +99,26 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %doc AUTHORS BUGS
 %defattr(-,root,root)
-%{_bindir}/Ogre*
-%{_bindir}/rcapsdump
-%{_libdir}/%{oname}/*
+%{_bindir}/OgreMeshUpgrader
+%{_bindir}/OgreXMLConverter
+%dir %{_libdir}/%{oname}
+%{_libdir}/%{oname}/*.so
+%dir %{_datadir}/%{oname}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/libOgreMain-%{version}.so
-%{_libdir}/libCEGUIOgreRenderer-%{version}.so
+%{_libdir}/*.so.%{version}
 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc Docs/* LINUX.DEV
-%defattr(-,root,root)
-%{_libdir}/libOgreMain.so
-%{_libdir}/libOgreMain.la
-%{_libdir}/libCEGUIOgreRenderer.la
-%{_libdir}/libCEGUIOgreRenderer.so
+%{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
+%{_libdir}/%{oname}/cmake
 %{_includedir}/%{oname}
 
 %files samples
 %defattr(-,root,root)
-%{_bindir}/%{name}-*
-%{_datadir}/%{name}/Samples
+%{_bindir}/SampleBrowser
+%{_datadir}/%{oname}/media
+%{_datadir}/%{oname}/Samples
+%{_libdir}/%{oname}/Samples
