@@ -73,7 +73,7 @@ Samples for %{oname}.
 %setup -qn %{name}_src_%{filever}
 
 %build
-%cmake -DOGRE_INSTALL_SAMPLES:BOOL=ON
+%cmake -DOGRE_INSTALL_SAMPLES:BOOL=ON -DOGRE_INSTALL_SAMPLES_SOURCE:BOOL=ON
 %make
 
 %install
