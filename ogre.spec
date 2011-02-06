@@ -114,6 +114,8 @@ rm -rf %{buildroot}
 %files samples
 %defattr(-,root,root)
 %{_bindir}/SampleBrowser
+%{_datadir}/%{oname}/*.cfg
+%{_datadir}/%{oname}/CMakeLists.txt
 %{_datadir}/%{oname}/media
 %{_datadir}/%{oname}/Samples
 %{_libdir}/%{oname}/Samples
