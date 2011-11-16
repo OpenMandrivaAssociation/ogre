@@ -1,5 +1,5 @@
 %define	oname OGRE
-%define version 1.7.2
+%define version 1.7.3
 %define uversion %(echo %{version}| tr . _)
 %define libname %mklibname %{name} %{uversion}
 %define	develname %mklibname %{name} -d
@@ -8,7 +8,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 2
+Release:	%mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
