@@ -1,14 +1,14 @@
 %define	oname OGRE
-%define version 1.7.3
-%define uversion %(echo %{version}| tr . _)
-%define libname %mklibname %{name} %{uversion}
+%define	version 1.7.4
+%define	uversion %(echo %{version}| tr . _)
+%define	libname %mklibname %{name} %{uversion}
 %define	develname %mklibname %{name} -d
-%define filever %(echo v%{version}| tr . -)
+%define	filever %(echo v%{version}| tr . -)
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	%{version}
-Release:	%mkrel 2
+Release:	%mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
@@ -26,9 +26,12 @@ BuildRequires:	freetype2-devel
 BuildRequires:	zziplib-devel
 BuildRequires:	cppunit-devel
 BuildRequires:	cmake
-BuildRequires:	cg-devel
+#Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
+#BuildRequires:	cg-devel
+#Be sure to build OGRE without cg-devel
+BuildConflicts:	cg-devel
 Conflicts:	libogre < 1.4.9
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Suggests:	ogre-cg-plugin = %{version}
 
 %description
 OGRE  (Object-Oriented  Graphics  Rendering  Engine)  is a scene-oriented,
@@ -78,23 +81,15 @@ Samples for %{oname}.
 %make
 
 %install
-rm -rf %{buildroot}
+%__rm -rf %{buildroot}
 %makeinstall_std -C build
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %clean
-rm -rf %{buildroot}
+%__rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
 %doc AUTHORS BUGS
-%defattr(-,root,root)
 %{_bindir}/OgreMeshUpgrader
 %{_bindir}/OgreXMLConverter
 %dir %{_libdir}/%{oname}
