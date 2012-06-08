@@ -2,17 +2,19 @@
 %define	version 1.7.4
 %define	uversion %(echo %{version}| tr . _)
 %define	libname %mklibname %{name} %{uversion}
-%define	develname %mklibname %{name} -d
+%define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	%{version}
-Release:	%mkrel 1
+Version:	1.7.4
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_%{filever}.tar.bz2
+
+BuildRequires:	cmake
 BuildRequires:	libx11-devel
 BuildRequires:	libxaw-devel
 BuildRequires:	libxrandr-devel
@@ -25,7 +27,6 @@ BuildRequires:	freeimage-devel
 BuildRequires:	freetype2-devel
 BuildRequires:	zziplib-devel
 BuildRequires:	cppunit-devel
-BuildRequires:	cmake
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
 #BuildRequires:	cg-devel
 #Be sure to build OGRE without cg-devel
@@ -44,7 +45,6 @@ objects and other intuitive classes.
 %package -n %{libname}
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
-Obsoletes:	%mklibname ogre 13
 
 %description -n %{libname}
 OGRE  (Object-Oriented  Graphics  Rendering  Engine)  is a scene-oriented,
@@ -54,16 +54,13 @@ The class library abstracts all the details  of  using the underlying system
 libraries like Direct3D and OpenGL and provides an interface based on world
 objects and other intuitive classes.
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	Development headers and libraries for writing programs using %{oname}
 Group:		Development/C++
 Requires:	%{libname} = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%mklibname -d %{name} 13
-Obsoletes:	%mklibname %{name} 1_4_1 -d
 
-%description -n	%{develname}
+%description -n	%{devname}
 Development headers and libraries for writing programs using %{oname}
 
 %package samples
@@ -81,14 +78,12 @@ Samples for %{oname}.
 %make
 
 %install
-%__rm -rf %{buildroot}
 %makeinstall_std -C build
 
 %clean
 %__rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root)
 %doc AUTHORS BUGS
 %{_bindir}/OgreMeshUpgrader
 %{_bindir}/OgreXMLConverter
@@ -97,18 +92,15 @@ Samples for %{oname}.
 %dir %{_datadir}/%{oname}
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.%{version}
 
-%files -n %{develname}
-%defattr(-,root,root)
+%files -n %{devname}
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/%{oname}/cmake
 %{_includedir}/%{oname}
 
 %files samples
-%defattr(-,root,root)
 %{_bindir}/SampleBrowser
 %{_datadir}/%{oname}/*.cfg
 %{_datadir}/%{oname}/CMakeLists.txt
