@@ -85,7 +85,7 @@ Samples for %{oname}.
 %{_bindir}/OgreMeshUpgrader
 %{_bindir}/OgreXMLConverter
 %dir %{_libdir}/%{oname}
-%{_libdir}/%{oname}/*.so
+%{_libdir}/%{oname}/*.so*
 %dir %{_datadir}/%{oname}
 
 %files -n %{libname}
