@@ -1,0 +1,2 @@
+# We use x_y_z instead of x.y.z so it's fine
+addFilter("E: incoherent-version-in-name")
