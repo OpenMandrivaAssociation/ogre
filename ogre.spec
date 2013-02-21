@@ -16,6 +16,7 @@ License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.ogre3d.org/
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_%{filever}.tar.bz2
+Source100:	%{name}.rpmlintrc
 
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(x11)
