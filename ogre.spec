@@ -1,36 +1,39 @@
 %define	oname OGRE
 ################################################################################
 # !!! Never backport this package as it requires full rebuild of all based games
-%define	version 1.8.1
 ################################################################################
 %define	uversion %(echo %{version}| tr . _)
-%define	libname %mklibname %{name} %{uversion}
+%define	libmain %mklibname OgreMain %{uversion}
+%define	libpag %mklibname OgrePaging %{uversion}
+%define	libprop %mklibname OgreProperty %{uversion}
+%define	librtss %mklibname OgreRTShaderSystem %{uversion}
+%define	libterr %mklibname OgreTerrain %{uversion}
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	%{version}
+Version:	1.8.1
 Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
-URL:		http://www.ogre3d.org/
+Url:		http://www.ogre3d.org/
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_%{filever}.tar.bz2
-Source100:	%{name}.rpmlintrc
+#Source100:	%{name}.rpmlintrc
 
 BuildRequires:	cmake
+BuildRequires:	boost-devel
+BuildRequires:	freeimage-devel
+BuildRequires:	pkgconfig(cppunit)
+BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(OIS)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(xt)
-BuildRequires:	pkgconfig(gl)
-BuildRequires:	pkgconfig(glu)
-BuildRequires:	pkgconfig(OIS)
-BuildRequires:	boost-devel
-BuildRequires:	freeimage-devel
-BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(zziplib)
-BuildRequires:	pkgconfig(cppunit)
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
 #BuildRequires:	cg-devel
 #Be sure to build OGRE without cg-devel
@@ -46,22 +49,54 @@ The class library abstracts all the details  of  using the underlying system
 libraries like Direct3D and OpenGL and provides an interface based on world
 objects and other intuitive classes.
 
-%package -n %{libname}
+%package -n %{libmain}
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
+Obsoletes:	%{_lib}ogre1_8_1 < 1.8.1-2
 
-%description -n %{libname}
-OGRE  (Object-Oriented  Graphics  Rendering  Engine)  is a scene-oriented,
-flexible 3D engine written in C++ designed to make it easier  and  more
-intuitive for developers to produce games and demos utilising 3D hardware.
-The class library abstracts all the details  of  using the underlying system
-libraries like Direct3D and OpenGL and provides an interface based on world
-objects and other intuitive classes.
+%description -n %{libmain}
+This package contains a shared library for %{name}.
+
+%package -n %{libpag}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{libpag}
+This package contains a shared library for %{name}.
+
+%package -n %{libprop}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{libprop}
+This package contains a shared library for %{name}.
+
+%package -n %{librtss}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{librtss}
+This package contains a shared library for %{name}.
+
+%package -n %{libterr}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{libterr}
+This package contains a shared library for %{name}.
 
 %package -n %{devname}
 Summary:	Development headers and libraries for writing programs using %{oname}
 Group:		Development/C++
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libmain} = %{version}-%{release}
+Requires:	%{libpag} = %{version}-%{release}
+Requires:	%{libprop} = %{version}-%{release}
+Requires:	%{librtss} = %{version}-%{release}
+Requires:	%{libterr} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
@@ -91,11 +126,24 @@ Samples for %{oname}.
 %{_bindir}/OgreMeshUpgrader
 %{_bindir}/OgreXMLConverter
 %dir %{_libdir}/%{oname}
-%{_libdir}/%{oname}/*.so*
+%{_libdir}/%{oname}/*.so.%{version}*
+%{_libdir}/%{oname}/*.so
 %dir %{_datadir}/%{oname}
 
-%files -n %{libname}
-%{_libdir}/*.so.%{version}
+%files -n %{libmain}
+%{_libdir}/libOgreMain.so.%{version}
+
+%files -n %{libpag}
+%{_libdir}/libOgrePaging.so.%{version}
+
+%files -n %{libprop}
+%{_libdir}/libOgreProperty.so.%{version}
+
+%files -n %{librtss}
+%{_libdir}/libOgreRTShaderSystem.so.%{version}
+
+%files -n %{libterr}
+%{_libdir}/libOgreTerrain.so.%{version}
 
 %files -n %{devname}
 %{_libdir}/*.so
@@ -110,5 +158,4 @@ Samples for %{oname}.
 %{_datadir}/%{oname}/media
 %{_datadir}/%{oname}/Samples
 %{_libdir}/%{oname}/Samples
-
 
