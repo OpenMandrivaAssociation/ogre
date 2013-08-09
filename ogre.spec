@@ -2,7 +2,7 @@
 ################################################################################
 # !!! Never backport this package as it requires full rebuild of all based games
 ################################################################################
-%define	uversion %(echo %{version}| tr . _)
+%define	uversion %(echo %{version})
 %define	libmain %mklibname OgreMain %{uversion}
 %define	libpag %mklibname OgrePaging %{uversion}
 %define	libprop %mklibname OgreProperty %{uversion}
