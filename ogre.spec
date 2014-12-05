@@ -209,5 +209,5 @@ rm -f %{buildroot}%{_datadir}/OGRE/docs/CMakeLists.txt
 %{_libdir}/%{oname}/Samples
 
 %files docs
-%{_datadir}/%{oname}/Docs
+%{_datadir}/%{oname}/docs
 
