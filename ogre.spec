@@ -8,17 +8,29 @@
 %define	libprop %mklibname OgreProperty %{uversion}
 %define	librtss %mklibname OgreRTShaderSystem %{uversion}
 %define	libterr %mklibname OgreTerrain %{uversion}
+%define	libolay %mklibname OgreOverlay %{uversion}
+%define	libvolm %mklibname OgreVolume %{uversion}
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	1.8.1
-Release:	6
+Version:	1.9.0
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
-Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_%{filever}.tar.bz2
+Source0:	http://downloads.sourceforge.net/ogre/%{name}-%{version}-clean.tar.bz2
+Patch0:         ogre-1.7.2-rpath.patch
+Patch1:         ogre-1.9.0-glew.patch
+Patch3:         ogre-1.7.2-fix-ppc-build.patch
+Patch5:         ogre-1.9.0-build-rcapsdump.patch
+Patch6:         ogre-thread.patch
+Patch7:         ogre-1.9.0-dynlib-allow-no-so.patch
+Patch8:         ogre-1.9.0-cmake-freetype.patch
+Patch9:         ogre-1.9.0-cmake_build-fix.patch
+Patch10:        ogre-aarch64.patch
+
 #Source100:	%{name}.rpmlintrc
 
 BuildRequires:	cmake
@@ -34,6 +46,7 @@ BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zziplib)
+BuildRequires:	tinyxml-devel
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
 #BuildRequires:	cg-devel
 #Be sure to build OGRE without cg-devel
@@ -89,6 +102,22 @@ Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
 %description -n %{libterr}
 This package contains a shared library for %{name}.
 
+%package -n %{libolay}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{libolay}
+This package contains a shared library for %{name}.
+
+%package -n %{libvolm}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{libvolm}
+This package contains a shared library for %{name}.
+
 %package -n %{devname}
 Summary:	Development headers and libraries for writing programs using %{oname}
 Group:		Development/C++
@@ -97,6 +126,8 @@ Requires:	%{libpag} = %{version}-%{release}
 Requires:	%{libprop} = %{version}-%{release}
 Requires:	%{librtss} = %{version}-%{release}
 Requires:	%{libterr} = %{version}-%{release}
+Requires:	%{libolay} = %{version}-%{release}
+Requires:	%{libvolm} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
@@ -109,22 +140,34 @@ Group:		System/Libraries
 %description samples
 Samples for %{oname}.
 
+%package	docs
+Summary:	Samples for %{oname}
+Group:		Documentation
+
+%description docs
+Docs for %{oname}.
+
 %prep
-%setup -qn %{name}_src_%{filever}
+%setup -qn %{name}-%{version}
+%apply_patches
 
 %build
 %cmake \
 	-DOGRE_INSTALL_SAMPLES:BOOL=ON \
+	-DOGRE_BUILD_RTSHADERSYSTEM_EXT_SHADERS=1 \
 	-DOGRE_INSTALL_SAMPLES_SOURCE:BOOL=ON
 %make
 
 %install
 %makeinstall_std -C build
 
+rm -f %{buildroot}%{_datadir}/OGRE/docs/CMakeLists.txt
+
 %files
 %doc AUTHORS BUGS
 %{_bindir}/OgreMeshUpgrader
 %{_bindir}/OgreXMLConverter
+%{_bindir}/rcapsdump
 %dir %{_libdir}/%{oname}
 %{_libdir}/%{oname}/*.so.%{version}*
 %{_libdir}/%{oname}/*.so
@@ -145,6 +188,12 @@ Samples for %{oname}.
 %files -n %{libterr}
 %{_libdir}/libOgreTerrain.so.%{version}
 
+%files -n %{libolay}
+%{_libdir}/libOgreOverlay.so.%{version}
+
+%files -n %{libvolm}
+%{_libdir}/libOgreVolume.so.%{version}
+
 %files -n %{devname}
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
@@ -155,7 +204,10 @@ Samples for %{oname}.
 %{_bindir}/SampleBrowser
 %{_datadir}/%{oname}/*.cfg
 %{_datadir}/%{oname}/CMakeLists.txt
-%{_datadir}/%{oname}/media
+%{_datadir}/%{oname}/Media
 %{_datadir}/%{oname}/Samples
 %{_libdir}/%{oname}/Samples
+
+%files docs
+%{_datadir}/%{oname}/Docs
 
