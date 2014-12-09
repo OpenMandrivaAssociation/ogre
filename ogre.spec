@@ -31,7 +31,7 @@ Patch8:         ogre-1.9.0-cmake-freetype.patch
 Patch9:         ogre-1.9.0-cmake_build-fix.patch
 Patch10:        ogre-aarch64.patch
 
-#Source100:	%{name}.rpmlintrc
+Source100:	%{name}.rpmlintrc
 
 BuildRequires:	cmake
 BuildRequires:	boost-devel
