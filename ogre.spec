@@ -48,9 +48,6 @@ BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zziplib)
 BuildRequires:	tinyxml-devel
 
-%ifarch ix86
-BuildRequires:	gcc-c++, gcc, gcc-cpp
-%endif
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
 #BuildRequires:	cg-devel
 #Be sure to build OGRE without cg-devel
@@ -156,9 +153,9 @@ Docs for %{oname}.
 %apply_patches
 
 %build
+#https://ogre3d.atlassian.net/browse/OGRE-332
 %ifarch ix86
-export CC=gcc
-export CXX=g++
+export CXXFLAGS="%{optflags} -msse"
 %endif
 
 %cmake \
