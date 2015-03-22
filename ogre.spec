@@ -12,6 +12,8 @@
 %define	libvolm %mklibname OgreVolume %{uversion}
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
+%define Werror_cflags %nil
+
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
@@ -47,6 +49,7 @@ BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zziplib)
 BuildRequires:	tinyxml-devel
+BuildRequires:	doxygen
 
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
 #BuildRequires:	cg-devel
@@ -154,8 +157,8 @@ Docs for %{oname}.
 
 %build
 #https://ogre3d.atlassian.net/browse/OGRE-332
-%ifarch ix86
-export CXXFLAGS="%{optflags} -msse"
+%ifarch %{ix86}
+export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Werror=0"
 %endif
 
 %cmake \
