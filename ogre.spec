@@ -12,11 +12,13 @@
 %define	libvolm %mklibname OgreVolume %{uversion}
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
+%define Werror_cflags %nil
+
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	1.9.0
-Release:	3
+Release:	5
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
@@ -47,6 +49,8 @@ BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zziplib)
 BuildRequires:	tinyxml-devel
+BuildRequires:	doxygen
+
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
 #BuildRequires:	cg-devel
 #Be sure to build OGRE without cg-devel
@@ -151,7 +155,14 @@ Docs for %{oname}.
 %setup -qn %{name}-%{version}
 %apply_patches
 
+find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
+
 %build
+#https://ogre3d.atlassian.net/browse/OGRE-332
+%ifarch %{ix86}
+export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Werror=0"
+%endif
+
 %cmake \
 	-DOGRE_INSTALL_SAMPLES:BOOL=ON \
 	-DOGRE_BUILD_RTSHADERSYSTEM_EXT_SHADERS=1 \
@@ -162,6 +173,8 @@ Docs for %{oname}.
 %makeinstall_std -C build
 
 rm -f %{buildroot}%{_datadir}/OGRE/docs/CMakeLists.txt
+find %{buildroot} -size 0 -delete
+
 
 %files
 %doc AUTHORS BUGS
