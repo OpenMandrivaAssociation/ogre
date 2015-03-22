@@ -16,7 +16,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	1.9.0
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
@@ -52,7 +52,7 @@ BuildRequires:	tinyxml-devel
 #Be sure to build OGRE without cg-devel
 BuildConflicts:	cg-devel
 Conflicts:	libogre < 1.4.9
-Suggests:	ogre-cg-plugin = %{version}
+Suggests:	ogre-cg-plugin = %{EVRD}
 
 %description
 OGRE  (Object-Oriented  Graphics  Rendering  Engine)  is a scene-oriented,
@@ -121,14 +121,14 @@ This package contains a shared library for %{name}.
 %package -n %{devname}
 Summary:	Development headers and libraries for writing programs using %{oname}
 Group:		Development/C++
-Requires:	%{libmain} = %{version}-%{release}
-Requires:	%{libpag} = %{version}-%{release}
-Requires:	%{libprop} = %{version}-%{release}
-Requires:	%{librtss} = %{version}-%{release}
-Requires:	%{libterr} = %{version}-%{release}
-Requires:	%{libolay} = %{version}-%{release}
-Requires:	%{libvolm} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libmain} = %{EVRD}
+Requires:	%{libpag} = %{EVRD}
+Requires:	%{libprop} = %{EVRD}
+Requires:	%{librtss} = %{EVRD}
+Requires:	%{libterr} = %{EVRD}
+Requires:	%{libolay} = %{EVRD}
+Requires:	%{libvolm} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n	%{devname}
 Development headers and libraries for writing programs using %{oname}
@@ -174,33 +174,41 @@ rm -f %{buildroot}%{_datadir}/OGRE/docs/CMakeLists.txt
 %dir %{_datadir}/%{oname}
 
 %files -n %{libmain}
+%doc AUTHORS BUGS
 %{_libdir}/libOgreMain.so.%{version}
 
 %files -n %{libpag}
+%doc AUTHORS BUGS
 %{_libdir}/libOgrePaging.so.%{version}
 
 %files -n %{libprop}
+%doc AUTHORS BUGS
 %{_libdir}/libOgreProperty.so.%{version}
 
 %files -n %{librtss}
 %{_libdir}/libOgreRTShaderSystem.so.%{version}
 
 %files -n %{libterr}
+%doc AUTHORS BUGS
 %{_libdir}/libOgreTerrain.so.%{version}
 
 %files -n %{libolay}
+%doc AUTHORS BUGS
 %{_libdir}/libOgreOverlay.so.%{version}
 
 %files -n %{libvolm}
+%doc AUTHORS BUGS
 %{_libdir}/libOgreVolume.so.%{version}
 
 %files -n %{devname}
+%doc AUTHORS BUGS
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/%{oname}/cmake
 %{_includedir}/%{oname}
 
 %files samples
+%doc AUTHORS BUGS
 %{_bindir}/SampleBrowser
 %{_datadir}/%{oname}/*.cfg
 %{_datadir}/%{oname}/CMakeLists.txt
@@ -209,5 +217,6 @@ rm -f %{buildroot}%{_datadir}/OGRE/docs/CMakeLists.txt
 %{_libdir}/%{oname}/Samples
 
 %files docs
+%doc AUTHORS BUGS
 %{_datadir}/%{oname}/docs
 
