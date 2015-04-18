@@ -29,7 +29,6 @@ Patch3:         ogre-1.7.2-fix-ppc-build.patch
 Patch5:         ogre-1.9.0-build-rcapsdump.patch
 Patch6:         ogre-thread.patch
 Patch7:         ogre-1.9.0-dynlib-allow-no-so.patch
-Patch8:         ogre-1.9.0-cmake-freetype.patch
 Patch9:         ogre-1.9.0-cmake_build-fix.patch
 Patch10:        ogre-aarch64.patch
 
@@ -50,6 +49,7 @@ BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zziplib)
 BuildRequires:	tinyxml-devel
 BuildRequires:	doxygen
+BuildRequires:	%{_lib}atomic-static-devel
 
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
 #BuildRequires:	cg-devel
