@@ -160,7 +160,7 @@ find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 %build
 #https://ogre3d.atlassian.net/browse/OGRE-332
 %ifarch %{ix86}
-export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Werror=0"
+export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Wno-error"
 %endif
 
 %cmake \
