@@ -146,7 +146,7 @@ Samples for %{oname}.
 
 %package	docs
 Summary:	Samples for %{oname}
-Group:		Documentation
+Group:		Development/C++
 
 %description docs
 Docs for %{oname}.
