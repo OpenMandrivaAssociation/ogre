@@ -13,12 +13,12 @@
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
 %define Werror_cflags %nil
-
+%define _disable_lto 1
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	1.9.0
-Release:	7
+Release:	8
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
