@@ -18,7 +18,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	1.9.0
-Release:	9
+Release:	10
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
@@ -160,7 +160,7 @@ find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 %build
 #https://ogre3d.atlassian.net/browse/OGRE-332
 %ifarch %{ix86}
-export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Wno-error"
+export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Wno-error -std=c++14"
 %endif
 
 %cmake \
