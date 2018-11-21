@@ -40,6 +40,7 @@ BuildRequires:	boost-devel
 BuildRequires:	freeimage-devel
 BuildRequires:	pkgconfig(cppunit)
 BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(OIS)
