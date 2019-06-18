@@ -2,7 +2,7 @@
 ################################################################################
 # !!! Never backport this package as it requires full rebuild of all based games
 ################################################################################
-%define	uversion %(echo %{version})
+%define	uversion 1.9.0
 %define	libmain %mklibname OgreMain %{uversion}
 %define	libpag %mklibname OgrePaging %{uversion}
 %define	libprop %mklibname OgreProperty %{uversion}
@@ -17,21 +17,17 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	1.9.0
-Release:	11
+Version:	1.9.1
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
-Source0:	http://downloads.sourceforge.net/ogre/%{name}-%{version}-clean.tar.bz2
+Source0:	https://github.com/OGRECave/ogre/archive/v%{version}.tar.gz
 Patch0:         ogre-1.7.2-rpath.patch
-Patch1:         ogre-1.9.0-glew.patch
 Patch3:         ogre-1.7.2-fix-ppc-build.patch
 Patch5:         ogre-1.9.0-build-rcapsdump.patch
 Patch6:         ogre-thread.patch
 Patch7:         ogre-1.9.0-dynlib-allow-no-so.patch
-#Patch8:         ogre-1.9.0-cmake-freetype.patch
-Patch9:         ogre-1.9.0-cmake_build-fix.patch
-Patch10:        ogre-aarch64.patch
 
 Source100:	%{name}.rpmlintrc
 
@@ -183,36 +179,36 @@ find %{buildroot} -size 0 -delete
 %{_bindir}/OgreXMLConverter
 %{_bindir}/rcapsdump
 %dir %{_libdir}/%{oname}
-%{_libdir}/%{oname}/*.so.%{version}*
+%{_libdir}/%{oname}/*.so.%{uversion}*
 %{_libdir}/%{oname}/*.so
 %dir %{_datadir}/%{oname}
 
 %files -n %{libmain}
 %doc AUTHORS BUGS
-%{_libdir}/libOgreMain.so.%{version}
+%{_libdir}/libOgreMain.so.%{uversion}
 
 %files -n %{libpag}
 %doc AUTHORS BUGS
-%{_libdir}/libOgrePaging.so.%{version}
+%{_libdir}/libOgrePaging.so.%{uversion}
 
 %files -n %{libprop}
 %doc AUTHORS BUGS
-%{_libdir}/libOgreProperty.so.%{version}
+%{_libdir}/libOgreProperty.so.%{uversion}
 
 %files -n %{librtss}
-%{_libdir}/libOgreRTShaderSystem.so.%{version}
+%{_libdir}/libOgreRTShaderSystem.so.%{uversion}
 
 %files -n %{libterr}
 %doc AUTHORS BUGS
-%{_libdir}/libOgreTerrain.so.%{version}
+%{_libdir}/libOgreTerrain.so.%{uversion}
 
 %files -n %{libolay}
 %doc AUTHORS BUGS
-%{_libdir}/libOgreOverlay.so.%{version}
+%{_libdir}/libOgreOverlay.so.%{uversion}
 
 %files -n %{libvolm}
 %doc AUTHORS BUGS
-%{_libdir}/libOgreVolume.so.%{version}
+%{_libdir}/libOgreVolume.so.%{uversion}
 
 %files -n %{devname}
 %doc AUTHORS BUGS

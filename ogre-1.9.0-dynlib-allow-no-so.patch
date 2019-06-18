@@ -13,7 +13,7 @@ diff -uNr ogre-1.9.0/OgreMain/src/OgreDynLib.cpp ogre-1.9.0.dynlib-allow-no-so/O
              name += ".so.";
              name += StringConverter::toString(OGRE_VERSION_MAJOR) + ".";
 @@ -93,7 +95,7 @@
- 		if (name.substr(name.length() - 4, 4) != ".dll")
+         if(name.substr(name.find_last_of(".") + 1) != "dll")
  			name += ".dll";
  #endif
 -        mInst = (DYNLIB_HANDLE)DYNLIB_LOAD( name.c_str() );
