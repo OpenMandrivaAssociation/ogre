@@ -2,14 +2,15 @@
 ################################################################################
 # !!! Never backport this package as it requires full rebuild of all based games
 ################################################################################
-%define	uversion 1.9.0
-%define	libmain %mklibname OgreMain %{uversion}
-%define	libpag %mklibname OgrePaging %{uversion}
-%define	libprop %mklibname OgreProperty %{uversion}
-%define	librtss %mklibname OgreRTShaderSystem %{uversion}
-%define	libterr %mklibname OgreTerrain %{uversion}
-%define	libolay %mklibname OgreOverlay %{uversion}
-%define	libvolm %mklibname OgreVolume %{uversion}
+%define	libmain %mklibname OgreMain %{version}
+%define	libpag %mklibname OgrePaging %{version}
+%define	libprop %mklibname OgreProperty %{version}
+%define	librtss %mklibname OgreRTShaderSystem %{version}
+%define	libterr %mklibname OgreTerrain %{version}
+%define	libolay %mklibname OgreOverlay %{version}
+%define	libvolm %mklibname OgreVolume %{version}
+%define	libbites %mklibname OgreBites %{version}
+%define	libmeshload %mklibname MeshLodGenerator %{version}
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
 %define Werror_cflags %nil
@@ -17,17 +18,16 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	1.9.1
-Release:	2
+Version:	1.12.5
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.76.tar.gz
+
 Patch0:         ogre-1.7.2-rpath.patch
-Patch3:         ogre-1.7.2-fix-ppc-build.patch
-Patch5:         ogre-1.9.0-build-rcapsdump.patch
 Patch6:         ogre-thread.patch
-Patch7:         ogre-1.9.0-dynlib-allow-no-so.patch
 
 Source100:	%{name}.rpmlintrc
 
@@ -46,6 +46,7 @@ BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zziplib)
 BuildRequires:	tinyxml-devel
+BuildRequires:  pugixml-devel
 BuildRequires:	doxygen
 
 #Requires to build cg-plugin, but we cannot do it as cg-devel is in Non-Free
@@ -119,6 +120,22 @@ Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
 %description -n %{libvolm}
 This package contains a shared library for %{name}.
 
+%package -n %{libbites}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{libbites}
+This package contains a shared library for %{name}.
+
+%package -n %{libmeshload}
+Summary:	Libraries needed for programs using %{oname}
+Group:		System/Libraries
+Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+
+%description -n %{libmeshload}
+This package contains a shared library for %{name}.
+
 %package -n %{devname}
 Summary:	Development headers and libraries for writing programs using %{oname}
 Group:		Development/C++
@@ -129,6 +146,8 @@ Requires:	%{librtss} = %{EVRD}
 Requires:	%{libterr} = %{EVRD}
 Requires:	%{libolay} = %{EVRD}
 Requires:	%{libvolm} = %{EVRD}
+Requires:	%{libbites} = %{EVRD}
+Requires:	%{libmeshload} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 
 %description -n	%{devname}
@@ -149,8 +168,9 @@ Group:		Documentation
 Docs for %{oname}.
 
 %prep
-%setup -qn %{name}-%{version}
-%autopatch -p1
+%autosetup -p1 -a1
+cp -r imgui-*/* Components/Overlay/src/imgui/
+rm -rf build/
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 
@@ -161,72 +181,84 @@ export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Wno-error -std=c++14"
 %endif
 
 %cmake \
-	-DOGRE_INSTALL_SAMPLES:BOOL=ON \
-	-DOGRE_BUILD_RTSHADERSYSTEM_EXT_SHADERS=1 \
-	-DOGRE_INSTALL_SAMPLES_SOURCE:BOOL=ON
-%make
+        -DOGRE_BUILD_DOCS:BOOL=OFF \
+        -DOGRE_BUILD_DEPENDENCIES=FALSE \
+        -DOGRE_BUILD_PLUGIN_CG:BOOL=OFF \
+        -DOGRE_INSTALL_SAMPLES:BOOL=ON \
+        -DOGRE_INSTALL_SAMPLES_SOURCE:BOOL=ON \
+        -DOGRE_CONFIG_MEMTRACK_RELEASE:BOOL=OFF
+%make_build
 
 %install
-%makeinstall_std -C build
+%make_install -C build
 
 rm -f %{buildroot}%{_datadir}/OGRE/docs/CMakeLists.txt
 find %{buildroot} -size 0 -delete
 
 
 %files
-%doc AUTHORS BUGS
+%doc AUTHORS
 %{_bindir}/OgreMeshUpgrader
 %{_bindir}/OgreXMLConverter
-%{_bindir}/rcapsdump
+%{_bindir}/VRMLConverter
 %dir %{_libdir}/%{oname}
-%{_libdir}/%{oname}/*.so.%{uversion}*
+%{_libdir}/%{oname}/*.so.%{version}*
 %{_libdir}/%{oname}/*.so
 %dir %{_datadir}/%{oname}
 
 %files -n %{libmain}
-%doc AUTHORS BUGS
-%{_libdir}/libOgreMain.so.%{uversion}
+%doc AUTHORS
+%{_libdir}/libOgreMain.so.%{version}
 
 %files -n %{libpag}
-%doc AUTHORS BUGS
-%{_libdir}/libOgrePaging.so.%{uversion}
+%doc AUTHORS
+%{_libdir}/libOgrePaging.so.%{version}
 
 %files -n %{libprop}
-%doc AUTHORS BUGS
-%{_libdir}/libOgreProperty.so.%{uversion}
+%doc AUTHORS
+%{_libdir}/libOgreProperty.so.%{version}
 
 %files -n %{librtss}
-%{_libdir}/libOgreRTShaderSystem.so.%{uversion}
+%{_libdir}/libOgreRTShaderSystem.so.%{version}
 
 %files -n %{libterr}
-%doc AUTHORS BUGS
-%{_libdir}/libOgreTerrain.so.%{uversion}
+%doc AUTHORS
+%{_libdir}/libOgreTerrain.so.%{version}
 
 %files -n %{libolay}
-%doc AUTHORS BUGS
-%{_libdir}/libOgreOverlay.so.%{uversion}
+%doc AUTHORS
+%{_libdir}/libOgreOverlay.so.%{version}
 
 %files -n %{libvolm}
-%doc AUTHORS BUGS
-%{_libdir}/libOgreVolume.so.%{uversion}
+%doc AUTHORS
+%{_libdir}/libOgreVolume.so.%{version}
+
+%files -n %{libbites}
+%doc AUTHORS
+%{_libdir}/libOgreBites.so.%{version}
+
+%files -n %{libmeshload}
+%doc AUTHORS
+%{_libdir}/libOgreMeshLodGenerator.so.%{version}
 
 %files -n %{devname}
-%doc AUTHORS BUGS
+%doc AUTHORS
 %{_libdir}/*.so
+%{_libdir}/libOgreGLSupport.a
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/%{oname}/cmake
 %{_includedir}/%{oname}
 
 %files samples
-%doc AUTHORS BUGS
+%doc AUTHORS
+%{_datadir}/%{oname}/GLX_backdrop.png
 %{_bindir}/SampleBrowser
 %{_datadir}/%{oname}/*.cfg
-%{_datadir}/%{oname}/CMakeLists.txt
 %{_datadir}/%{oname}/Media
 %{_datadir}/%{oname}/Samples
 %{_libdir}/%{oname}/Samples
 
 %files docs
-%doc AUTHORS BUGS
-%{_datadir}/%{oname}/docs
+%doc AUTHORS
+%{_docdir}/%{oname}/
 
