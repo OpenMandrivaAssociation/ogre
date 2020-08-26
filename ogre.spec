@@ -169,6 +169,7 @@ Docs for %{oname}.
 
 %prep
 %autosetup -p1 -a1
+mkdir Components/Overlay/src/imgui/
 cp -r imgui-*/* Components/Overlay/src/imgui/
 rm -rf build/
 
