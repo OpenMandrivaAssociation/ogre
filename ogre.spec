@@ -24,7 +24,7 @@ License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:        https://github.com/ocornut/imgui/archive/v1.73.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.76.tar.gz
 
 Patch0:         ogre-1.7.2-rpath.patch
 Patch6:         ogre-thread.patch
@@ -169,8 +169,8 @@ Docs for %{oname}.
 
 %prep
 %autosetup -p1 -a1
-mkdir Components/Overlay/src/imgui-1.73/
-cp -r imgui-*/* Components/Overlay/src/imgui-1.73/
+mkdir Components/Overlay/src/imgui-1.76/
+cp -r imgui-*/* Components/Overlay/src/imgui-1.76/
 rm -rf build/
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
