@@ -24,7 +24,7 @@ License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:        https://github.com/ocornut/imgui/archive/v1.76.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.78/%{name}-1.78.tar.gz
 
 Patch0:         ogre-1.7.2-rpath.patch
 Patch6:         ogre-thread.patch
