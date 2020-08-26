@@ -34,12 +34,17 @@ Source100:	%{name}.rpmlintrc
 BuildRequires:	cmake
 BuildRequires:	boost-devel
 BuildRequires:	freeimage-devel
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  swig
 BuildRequires:	pkgconfig(cppunit)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(OIS)
+BuildRequires:  pkgconfig(OpenEXR)
+BuildRequires:  pkgconfig(python)
+BuildRequires:  pkgconfig(sdl2)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xrandr)
@@ -169,8 +174,8 @@ Docs for %{oname}.
 
 %prep
 %autosetup -p1 -a1
-mkdir Components/Overlay/src/imgui-1.76/
-cp -r imgui-*/* Components/Overlay/src/imgui-1.76/
+mkdir Components/Overlay/src/imgui/
+cp -r imgui-*/* Components/Overlay/src/imgui/
 rm -rf build/
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
