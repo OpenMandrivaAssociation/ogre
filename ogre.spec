@@ -29,7 +29,7 @@ Source1:        https://github.com/ocornut/imgui/archive/v1.78/imgui-1.78.tar.gz
 Patch0:         ogre-1.7.2-rpath.patch
 Patch6:         ogre-thread.patch
 # As of ogre 1.12.8 switched from allowing imgui submodule to force downloading (old version) imgui at compiling time. This is not good practice for omv,
-# so we patch it for force use new version of imgui and also from submodule provided by us.
+# so we patch it for force use new version of imgui and also from submodule provided by us. Patch from https://gitweb.gentoo.org/repo/gentoo.git/tree/dev-games/ogre/files/ogre-1.12.8-upgrade_imgui.patch
 Patch7:         ogre-1.12.8-upgrade_imgui-1.78.patch
 
 Source100:	%{name}.rpmlintrc
