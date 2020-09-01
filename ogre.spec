@@ -18,28 +18,37 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	1.12.6
+Version:	1.12.8
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:        https://github.com/ocornut/imgui/archive/v1.76.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.78/imgui-1.78.tar.gz
 
 Patch0:         ogre-1.7.2-rpath.patch
 Patch6:         ogre-thread.patch
+# As of ogre 1.12.8 switched from allowing imgui submodule to force downloading (old version) imgui at compiling time. This is not good practice for omv,
+# so we patch it for force use new version of imgui and also from submodule provided by us. Patch from https://gitweb.gentoo.org/repo/gentoo.git/tree/dev-games/ogre/files/ogre-1.12.8-upgrade_imgui.patch
+Patch7:         ogre-1.12.8-upgrade_imgui-1.78.patch
 
 Source100:	%{name}.rpmlintrc
 
 BuildRequires:	cmake
 BuildRequires:	boost-devel
 BuildRequires:	freeimage-devel
+BuildRequires:  qt5-qtbase-devel
+BuildRequires:  swig
 BuildRequires:	pkgconfig(cppunit)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
+BuildRequires:  pkgconfig(mono)
 BuildRequires:	pkgconfig(OIS)
+BuildRequires:  pkgconfig(OpenEXR)
+BuildRequires:  pkgconfig(python)
+#BuildRequires:  pkgconfig(sdl2)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xrandr)
@@ -169,8 +178,11 @@ Docs for %{oname}.
 
 %prep
 %autosetup -p1 -a1
-cp -r imgui-*/* Components/Overlay/src/imgui/
-rm -rf build/
+#mkdir Components/Overlay/src/imgui/
+#cp -r imgui-*/* Components/Overlay/src/imgui/
+#rm -rf build/
+
+cp -r imgui-*/*
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 
@@ -204,7 +216,11 @@ find %{buildroot} -size 0 -delete
 %dir %{_libdir}/%{oname}
 %{_libdir}/%{oname}/*.so.%{version}*
 %{_libdir}/%{oname}/*.so
+%{_libdir}/libOgreBitesQt.so.1.12.8
 %dir %{_datadir}/%{oname}
+%{_prefix}/lib/cli/ogre-sharp-%{version}/libOgre.so
+%{_prefix}/lib/cli/ogre-sharp-1.12.8/Ogre.dll
+%{_prefix}/lib/python3.8/dist-packages/Ogre/*
 
 %files -n %{libmain}
 %doc AUTHORS
