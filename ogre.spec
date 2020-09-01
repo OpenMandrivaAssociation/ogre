@@ -28,6 +28,7 @@ Source1:        https://github.com/ocornut/imgui/archive/v1.78/imgui-1.78.tar.g
 
 Patch0:         ogre-1.7.2-rpath.patch
 Patch6:         ogre-thread.patch
+Patch7:         ogre-1.12.8-upgrade_imgui-1.78.patch
 
 Source100:	%{name}.rpmlintrc
 
@@ -175,9 +176,11 @@ Docs for %{oname}.
 
 %prep
 %autosetup -p1 -a1
-mkdir Components/Overlay/src/imgui/
-cp -r imgui-*/* Components/Overlay/src/imgui/
-rm -rf build/
+#mkdir Components/Overlay/src/imgui/
+#cp -r imgui-*/* Components/Overlay/src/imgui/
+#rm -rf build/
+
+cp -r imgui-*/* /imgui
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 
