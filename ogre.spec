@@ -214,7 +214,11 @@ find %{buildroot} -size 0 -delete
 %dir %{_libdir}/%{oname}
 %{_libdir}/%{oname}/*.so.%{version}*
 %{_libdir}/%{oname}/*.so
+%{_libdir}/libOgreBitesQt.so.1.12.8
 %dir %{_datadir}/%{oname}
+%{_prefix}/lib/cli/ogre-sharp-%{version}/libOgre.so
+%{_prefix}/lib/cli/ogre-sharp-1.12.8/Ogre.dll
+%{_prefix}/lib/python3.8/dist-packages/Ogre/*
 
 %files -n %{libmain}
 %doc AUTHORS
