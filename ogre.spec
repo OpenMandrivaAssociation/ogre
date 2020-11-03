@@ -220,7 +220,7 @@ find %{buildroot} -size 0 -delete
 %dir %{_datadir}/%{oname}
 %{_prefix}/lib/cli/ogre-sharp-%{version}/libOgre.so
 %{_prefix}/lib/cli/ogre-sharp-1.12.8/Ogre.dll
-%{_prefix}/lib/python3.8/dist-packages/Ogre/*
+%{_prefix}/lib/python*/dist-packages/Ogre/*
 
 %files -n %{libmain}
 %doc AUTHORS
