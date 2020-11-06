@@ -13,24 +13,25 @@
 %define	libmeshload %mklibname MeshLodGenerator %{version}
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
-%define Werror_cflags %nil
-%define _disable_lto 1
+%global optflags %{optflags} -I%{_includedir}/SDL2 -fno-strict-aliasing
+#define _disable_lto 1
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	1.12.8
+Version:	1.12.9
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:        https://github.com/ocornut/imgui/archive/v1.78/imgui-1.78.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.79/imgui-1.79.tar.gz
 
 Patch0:         ogre-1.7.2-rpath.patch
+Patch1:		ogre-1.12.9-compile.patch
 Patch6:         ogre-thread.patch
-# As of ogre 1.12.8 switched from allowing imgui submodule to force downloading (old version) imgui at compiling time. This is not good practice for omv,
-# so we patch it for force use new version of imgui and also from submodule provided by us. Patch from https://gitweb.gentoo.org/repo/gentoo.git/tree/dev-games/ogre/files/ogre-1.12.8-upgrade_imgui.patch
-Patch7:         ogre-1.12.8-upgrade_imgui-1.78.patch
+# As of ogre 1.12.9 switched from allowing imgui submodule to force downloading (old version) imgui at compiling time. This is not good practice for omv,
+# so we patch it for force use new version of imgui and also from submodule provided by us. Patch based on https://gitweb.gentoo.org/repo/gentoo.git/tree/dev-games/ogre/files/ogre-1.12.8-upgrade_imgui.patch
+Patch7:         ogre-1.12.9-upgrade_imgui-1.79.patch
 
 Source100:	%{name}.rpmlintrc
 
@@ -178,31 +179,39 @@ Docs for %{oname}.
 
 %prep
 %autosetup -p1 -a1
-#mkdir Components/Overlay/src/imgui/
-#cp -r imgui-*/* Components/Overlay/src/imgui/
-#rm -rf build/
-
-cp -r imgui-*/*
+mkdir build
+mv imgui-* build/
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 
-%build
 #https://ogre3d.atlassian.net/browse/OGRE-332
 %ifarch %{ix86}
-export CXXFLAGS="%{optflags} -msse -Wstrict-aliasing=0 -Wno-error -std=c++14"
+export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 %endif
 
+# FIXME enable Java and C# once they're fixed to work with swig 4.x
 %cmake \
         -DOGRE_BUILD_DOCS:BOOL=OFF \
         -DOGRE_BUILD_DEPENDENCIES=FALSE \
         -DOGRE_BUILD_PLUGIN_CG:BOOL=OFF \
         -DOGRE_INSTALL_SAMPLES:BOOL=ON \
         -DOGRE_INSTALL_SAMPLES_SOURCE:BOOL=ON \
-        -DOGRE_CONFIG_MEMTRACK_RELEASE:BOOL=OFF
-%make_build
+        -DOGRE_CONFIG_MEMTRACK_RELEASE:BOOL=OFF \
+	-DOGRE_BUILD_COMPONENT_OVERLAY:BOOL=ON \
+	-DOGRE_BUILD_COMPONENT_OVERLAY_IMGUI:BOOL=ON \
+	-DOGRE_BUILD_COMPONENT_CSHARP:BOOL=OFF \
+	-DOGRE_BUILD_COMPONENT_JAVA:BOOL=OFF \
+	-DOGRE_BUILD_RENDERSYSTEM_GL:BOOL=ON \
+	-DOGRE_BUILD_RENDERSYSTEM_GL3PLUS:BOOL=ON \
+	-DOGRE_BUILD_RENDERSYSTEM_GLES2:BOOL=ON \
+	-DOGRE_GLSUPPORT_USE_EGL:BOOL=ON \
+	-G Ninja
+
+%build
+%ninja_build -C build
 
 %install
-%make_install -C build
+%ninja_install -C build
 
 rm -f %{buildroot}%{_datadir}/OGRE/docs/CMakeLists.txt
 find %{buildroot} -size 0 -delete
@@ -216,10 +225,8 @@ find %{buildroot} -size 0 -delete
 %dir %{_libdir}/%{oname}
 %{_libdir}/%{oname}/*.so.%{version}*
 %{_libdir}/%{oname}/*.so
-%{_libdir}/libOgreBitesQt.so.1.12.8
+%{_libdir}/libOgreBitesQt.so.%{version}
 %dir %{_datadir}/%{oname}
-%{_prefix}/lib/cli/ogre-sharp-%{version}/libOgre.so
-%{_prefix}/lib/cli/ogre-sharp-1.12.8/Ogre.dll
 %{_prefix}/lib/python*/dist-packages/Ogre/*
 
 %files -n %{libmain}

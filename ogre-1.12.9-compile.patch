@@ -1,0 +1,12 @@
+diff -up ogre-1.12.9/Components/Bites/CMakeLists.txt.omv~ ogre-1.12.9/Components/Bites/CMakeLists.txt
+--- ogre-1.12.9/Components/Bites/CMakeLists.txt.omv~	2020-11-06 22:12:31.448425056 +0100
++++ ogre-1.12.9/Components/Bites/CMakeLists.txt	2020-11-06 22:13:36.125669775 +0100
+@@ -147,7 +147,7 @@ if(OGRE_STATIC AND APPLE AND OGRE_BUILD_
+ endif()
+ 
+ if(SDL2_FOUND)
+-  target_link_libraries(OgreBites PRIVATE SDL2::SDL2)
++  target_link_libraries(OgreBites PRIVATE SDL2::SDL2 -lSDL2)
+ elseif(NOT EMSCRIPTEN)
+   message(WARNING "SDL2 not found - no input handling and reduced window creation capabilites")
+ endif()
