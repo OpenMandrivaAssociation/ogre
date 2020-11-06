@@ -36,6 +36,7 @@ Patch7:         ogre-1.12.9-upgrade_imgui-1.79.patch
 Source100:	%{name}.rpmlintrc
 
 BuildRequires:	cmake
+BuildRequires:	ninja
 BuildRequires:	boost-devel
 BuildRequires:	freeimage-devel
 BuildRequires:  qt5-qtbase-devel
