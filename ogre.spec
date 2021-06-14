@@ -208,6 +208,8 @@ export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 	-G Ninja
 
 %build
+export CC=gcc
+export CXX=g++
 %ninja_build -C build
 
 %install
