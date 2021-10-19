@@ -31,6 +31,8 @@ Source1:        https://github.com/ocornut/imgui/archive/v1.79/imgui-1.79.tar.gz
 Patch0:         ogre-1.7.2-rpath.patch
 Patch1:		ogre-1.12.9-compile.patch
 Patch6:         ogre-thread.patch
+# Patch from Solus. Force OpenEXR 3 instead 2.
+Patch7:		OpenEXR-instead-of-ilmbase.patch
 
 Source100:	%{name}.rpmlintrc
 
@@ -45,11 +47,13 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
+# Disable, until mono is not instalable in Cooker
 #BuildRequires:  pkgconfig(mono)
 BuildRequires:	pkgconfig(OIS)
-#BuildRequires:  pkgconfig(OpenEXR)
+# Ogre still depend on OpenEXR v2. Let's try patch it for v3.
+BuildRequires:  pkgconfig(OpenEXR)
 BuildRequires:  pkgconfig(python)
-#BuildRequires:  pkgconfig(sdl2)
+BuildRequires:  pkgconfig(sdl2)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xrandr)
@@ -189,6 +193,7 @@ find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 %endif
 
+# As of Clang 13 and Ogre 1.12.12/13 LLVM crashing at compilin time. As workaround use GCC for now.
 export CC=gcc
 export CXX=g++
 # FIXME enable Java and C# once they're fixed to work with swig 4.x
