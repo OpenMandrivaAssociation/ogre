@@ -267,7 +267,6 @@ find %{buildroot} -size 0 -delete
 %files -n %{devname}
 %doc AUTHORS
 %{_libdir}/*.so
-%{_libdir}/libOgreGLSupport.a
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/%{oname}/cmake
 %{_includedir}/%{oname}
