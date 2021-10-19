@@ -18,7 +18,7 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	1.12.10
+Version:	1.12.13
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -31,6 +31,8 @@ Source1:        https://github.com/ocornut/imgui/archive/v1.79/imgui-1.79.tar.gz
 Patch0:         ogre-1.7.2-rpath.patch
 Patch1:		ogre-1.12.9-compile.patch
 Patch6:         ogre-thread.patch
+# Patch from Solus. Force OpenEXR 3 instead 2.
+Patch7:		OpenEXR-instead-of-ilmbase.patch
 
 Source100:	%{name}.rpmlintrc
 
@@ -45,11 +47,13 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
-BuildRequires:  pkgconfig(mono)
+# Disable, until mono is not instalable in Cooker
+#BuildRequires:  pkgconfig(mono)
 BuildRequires:	pkgconfig(OIS)
+# Ogre still depend on OpenEXR v2. Let's try patch it for v3.
 BuildRequires:  pkgconfig(OpenEXR)
 BuildRequires:  pkgconfig(python)
-#BuildRequires:  pkgconfig(sdl2)
+BuildRequires:  pkgconfig(sdl2)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xrandr)
@@ -189,6 +193,9 @@ find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 %endif
 
+# As of Clang 13 and Ogre 1.12.12/13 LLVM crashing at compilin time. As workaround use GCC for now.
+export CC=gcc
+export CXX=g++
 # FIXME enable Java and C# once they're fixed to work with swig 4.x
 %cmake \
         -DOGRE_BUILD_DOCS:BOOL=OFF \
@@ -201,13 +208,11 @@ export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 	-DOGRE_BUILD_COMPONENT_OVERLAY_IMGUI:BOOL=ON \
 	-DOGRE_BUILD_COMPONENT_CSHARP:BOOL=OFF \
 	-DOGRE_BUILD_COMPONENT_JAVA:BOOL=OFF \
-	-DOGRE_BUILD_RENDERSYSTEM_GL:BOOL=ON \
-	-DOGRE_BUILD_RENDERSYSTEM_GL3PLUS:BOOL=ON \
-	-DOGRE_BUILD_RENDERSYSTEM_GLES2:BOOL=ON \
-	-DOGRE_GLSUPPORT_USE_EGL:BOOL=ON \
 	-G Ninja
 
 %build
+export CC=gcc
+export CXX=g++
 %ninja_build -C build
 
 %install
@@ -267,7 +272,6 @@ find %{buildroot} -size 0 -delete
 %files -n %{devname}
 %doc AUTHORS
 %{_libdir}/*.so
-%{_libdir}/libOgreGLSupport.a
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/%{oname}/cmake
 %{_includedir}/%{oname}
