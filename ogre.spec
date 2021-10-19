@@ -189,6 +189,8 @@ find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 %endif
 
+export CC=gcc
+export CXX=g++
 # FIXME enable Java and C# once they're fixed to work with swig 4.x
 %cmake \
         -DOGRE_BUILD_DOCS:BOOL=OFF \
@@ -204,6 +206,8 @@ export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 	-G Ninja
 
 %build
+export CC=gcc
+export CXX=g++
 %ninja_build -C build
 
 %install
