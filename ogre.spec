@@ -16,9 +16,11 @@
 %global optflags %{optflags} -I%{_includedir}/SDL2 -fno-strict-aliasing
 #define _disable_lto 1
 
+%define major %(echo %{version} |cut -d. -f1-2)
+
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	1.12.13
+Version:	13.2.4
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -26,10 +28,11 @@ Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
 # Make sure the version here is in sync with
 # Components/Overlay/CMakeLists.txt
-Source1:        https://github.com/ocornut/imgui/archive/v1.79/imgui-1.79.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.85/imgui-1.85.tar.gz
 
 Patch0:         ogre-1.7.2-rpath.patch
 Patch1:		ogre-1.12.9-compile.patch
+Patch2:		ogre-13.2.4-linkage.patch
 Patch6:         ogre-thread.patch
 # Patch from Solus. Force OpenEXR 3 instead 2.
 Patch7:		OpenEXR-instead-of-ilmbase.patch
@@ -228,46 +231,46 @@ find %{buildroot} -size 0 -delete
 %{_bindir}/OgreXMLConverter
 %{_bindir}/VRMLConverter
 %dir %{_libdir}/%{oname}
-%{_libdir}/%{oname}/*.so.%{version}*
+%{_libdir}/%{oname}/*.so.%{major}*
 %{_libdir}/%{oname}/*.so
-%{_libdir}/libOgreBitesQt.so.%{version}
+%{_libdir}/libOgreBitesQt.so.%{major}
 %dir %{_datadir}/%{oname}
 %{_prefix}/lib/python*/dist-packages/Ogre/*
 
 %files -n %{libmain}
 %doc AUTHORS
-%{_libdir}/libOgreMain.so.%{version}
+%{_libdir}/libOgreMain.so.%{major}
 
 %files -n %{libpag}
 %doc AUTHORS
-%{_libdir}/libOgrePaging.so.%{version}
+%{_libdir}/libOgrePaging.so.%{major}
 
 %files -n %{libprop}
 %doc AUTHORS
-%{_libdir}/libOgreProperty.so.%{version}
+%{_libdir}/libOgreProperty.so.%{major}
 
 %files -n %{librtss}
-%{_libdir}/libOgreRTShaderSystem.so.%{version}
+%{_libdir}/libOgreRTShaderSystem.so.%{major}
 
 %files -n %{libterr}
 %doc AUTHORS
-%{_libdir}/libOgreTerrain.so.%{version}
+%{_libdir}/libOgreTerrain.so.%{major}
 
 %files -n %{libolay}
 %doc AUTHORS
-%{_libdir}/libOgreOverlay.so.%{version}
+%{_libdir}/libOgreOverlay.so.%{major}
 
 %files -n %{libvolm}
 %doc AUTHORS
-%{_libdir}/libOgreVolume.so.%{version}
+%{_libdir}/libOgreVolume.so.%{major}
 
 %files -n %{libbites}
 %doc AUTHORS
-%{_libdir}/libOgreBites.so.%{version}
+%{_libdir}/libOgreBites.so.%{major}
 
 %files -n %{libmeshload}
 %doc AUTHORS
-%{_libdir}/libOgreMeshLodGenerator.so.%{version}
+%{_libdir}/libOgreMeshLodGenerator.so.%{major}
 
 %files -n %{devname}
 %doc AUTHORS
@@ -282,7 +285,6 @@ find %{buildroot} -size 0 -delete
 %{_bindir}/SampleBrowser
 %{_datadir}/%{oname}/*.cfg
 %{_datadir}/%{oname}/Media
-%{_datadir}/%{oname}/Samples
 %{_libdir}/%{oname}/Samples
 
 %files docs
