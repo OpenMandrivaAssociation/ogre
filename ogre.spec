@@ -21,7 +21,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	13.2.4
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
@@ -72,6 +72,9 @@ BuildRequires:	doxygen
 BuildConflicts:	cg-devel
 Conflicts:	libogre < 1.4.9
 Suggests:	ogre-cg-plugin = %{EVRD}
+# This used to be in the main ogre package, let's make sure
+# we don't get nasty surprises
+Suggests:	python-ogre = %{EVRD}
 
 %description
 OGRE  (Object-Oriented  Graphics  Rendering  Engine)  is a scene-oriented,
@@ -153,6 +156,13 @@ Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
 %description -n %{libmeshload}
 This package contains a shared library for %{name}.
 
+%package -n python-ogre
+Summary:	Python support for the Ogre 3D engine
+Group:		System/Libraries
+
+%description -n python-ogre
+Python support for the Ogre 3D engine
+
 %package -n %{devname}
 Summary:	Development headers and libraries for writing programs using %{oname}
 Group:		Development/C++
@@ -196,6 +206,9 @@ find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 %endif
 
+# Don't install python bits to Debian specific directories
+sed -i -e 's,lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages/,%{python_sitelib}/,g' Components/Python/CMakeLists.txt
+
 # As of Clang 13 and Ogre 1.12.12/13 LLVM crashing at compilin time. As workaround use GCC for now.
 export CC=gcc
 export CXX=g++
@@ -235,7 +248,9 @@ find %{buildroot} -size 0 -delete
 %{_libdir}/%{oname}/*.so
 %{_libdir}/libOgreBitesQt.so.%{major}
 %dir %{_datadir}/%{oname}
-%{_prefix}/lib/python*/dist-packages/Ogre/*
+
+%files -n python-ogre
+%{python_sitelib}/Ogre
 
 %files -n %{libmain}
 %doc AUTHORS
