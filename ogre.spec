@@ -21,7 +21,7 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	13.5.3
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
@@ -226,6 +226,7 @@ export CXX=g++
 	-DOGRE_BUILD_COMPONENT_CSHARP:BOOL=OFF \
 	-DOGRE_BUILD_COMPONENT_JAVA:BOOL=OFF \
 	-DOGRE_NODELESS_POSITIONING:BOOL=ON \
+	-DOGRE_RESOURCEMANAGER_STRICT=0 \
 	-G Ninja
 
 %build
