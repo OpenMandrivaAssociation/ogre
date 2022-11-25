@@ -20,8 +20,8 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	13.2.4
-Release:	2
+Version:	13.5.3
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
@@ -30,10 +30,9 @@ Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}
 # Components/Overlay/CMakeLists.txt
 Source1:        https://github.com/ocornut/imgui/archive/v1.85/imgui-1.85.tar.gz
 
-Patch0:         ogre-1.7.2-rpath.patch
 Patch1:		ogre-1.12.9-compile.patch
 Patch2:		ogre-13.2.4-linkage.patch
-Patch6:         ogre-thread.patch
+#Patch6:         ogre-thread.patch
 # Patch from Solus. Force OpenEXR 3 instead 2.
 Patch7:		OpenEXR-instead-of-ilmbase.patch
 

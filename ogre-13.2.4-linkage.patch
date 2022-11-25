@@ -1,12 +1,12 @@
-diff -up ogre-13.2.4/RenderSystems/GL/CMakeLists.txt.omv~ ogre-13.2.4/RenderSystems/GL/CMakeLists.txt
---- ogre-13.2.4/RenderSystems/GL/CMakeLists.txt.omv~	2021-12-25 18:35:46.140337918 +0100
-+++ ogre-13.2.4/RenderSystems/GL/CMakeLists.txt	2021-12-25 18:36:47.348355471 +0100
+diff -up ogre-13.5.3/RenderSystems/GL/CMakeLists.txt.2~ ogre-13.5.3/RenderSystems/GL/CMakeLists.txt
+--- ogre-13.5.3/RenderSystems/GL/CMakeLists.txt.2~	2022-11-25 01:38:44.512631011 +0100
++++ ogre-13.5.3/RenderSystems/GL/CMakeLists.txt	2022-11-25 01:39:39.303939165 +0100
 @@ -63,7 +63,7 @@ add_definitions(-DOGRE_GLPLUGIN_EXPORTS
  #Note that in the next row SOURCE_FILES are added last. This is to prevent compilation problems of unity build found on Windows Visual Studio. 
  #In this situation any file added after the "glew.cpp" file, which belongs to the SOURCE_FILES package, does not compile
  add_library(RenderSystem_GL ${OGRE_LIB_TYPE} ${HEADER_FILES} ${GLSL_SOURCE} ${ATIFS_SOURCE} ${NVPARSE_SOURCE} ${SOURCE_FILES})
--target_link_libraries(RenderSystem_GL PUBLIC OgreMain PRIVATE OgreGLSupport)
-+target_link_libraries(RenderSystem_GL PUBLIC OgreMain PRIVATE OgreGLSupport GL)
+-target_link_libraries(RenderSystem_GL PUBLIC OgreMain PRIVATE OgreGLSupport ${CMAKE_DL_LIBS})
++target_link_libraries(RenderSystem_GL PUBLIC OgreMain PRIVATE OgreGLSupport GL ${CMAKE_DL_LIBS})
  target_include_directories(RenderSystem_GL PUBLIC 
      "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
      $<INSTALL_INTERFACE:include/OGRE/RenderSystems/GL>)
