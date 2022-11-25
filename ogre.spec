@@ -21,14 +21,14 @@
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	13.5.3
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
 # Make sure the version here is in sync with
 # Components/Overlay/CMakeLists.txt
-Source1:        https://github.com/ocornut/imgui/archive/v1.85/imgui-1.85.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.87/imgui-1.87.tar.gz
 
 Patch1:		ogre-1.12.9-compile.patch
 Patch2:		ogre-13.2.4-linkage.patch
@@ -208,9 +208,11 @@ export CXXFLAGS="%{optflags} -msse -Wno-error -std=c++14"
 # Don't install python bits to Debian specific directories
 sed -i -e 's,lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages/,%{python_sitelib}/,g' Components/Python/CMakeLists.txt
 
-# As of Clang 13 and Ogre 1.12.12/13 LLVM crashing at compilin time. As workaround use GCC for now.
+# As of Clang 15.0.5 and Ogre 13.5.3 LLVM crashes at compile time. As workaround use GCC for now.
 export CC=gcc
 export CXX=g++
+# Deprecated bits like OGRE_NODELESS_POSITIONING are enabled because some
+# packages (stuntrally etc.) still use those APIs.
 # FIXME enable Java and C# once they're fixed to work with swig 4.x
 %cmake \
         -DOGRE_BUILD_DOCS:BOOL=OFF \
@@ -223,6 +225,7 @@ export CXX=g++
 	-DOGRE_BUILD_COMPONENT_OVERLAY_IMGUI:BOOL=ON \
 	-DOGRE_BUILD_COMPONENT_CSHARP:BOOL=OFF \
 	-DOGRE_BUILD_COMPONENT_JAVA:BOOL=OFF \
+	-DOGRE_NODELESS_POSITIONING:BOOL=ON \
 	-G Ninja
 
 %build
