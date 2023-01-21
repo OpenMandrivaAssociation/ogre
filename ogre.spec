@@ -20,8 +20,8 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	13.5.3
-Release:	3
+Version:	13.6.0
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
