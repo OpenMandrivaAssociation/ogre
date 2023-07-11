@@ -250,7 +250,7 @@ find %{buildroot} -size 0 -delete
 %{_libdir}/%{oname}/*.so.%{major}*
 %{_libdir}/%{oname}/*.so
 %{_libdir}/libOgreBitesQt.so.%{major}
-%dir %{_datadir}/%{oname}
+#dir %{_datadir}/%{oname}
 
 %files -n python-ogre
 %{python_sitelib}/Ogre
