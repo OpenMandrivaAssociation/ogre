@@ -299,10 +299,10 @@ find %{buildroot} -size 0 -delete
 
 %files samples
 %doc AUTHORS
-%{_datadir}/%{oname}/GLX_backdrop.png
+#{_datadir}/%{oname}/GLX_backdrop.png
 %{_bindir}/SampleBrowser
-%{_datadir}/%{oname}/*.cfg
-%{_datadir}/%{oname}/Media
+#{_datadir}/%{oname}/*.cfg
+#{_datadir}/%{oname}/Media
 %{_libdir}/%{oname}/Samples
 
 %files docs
