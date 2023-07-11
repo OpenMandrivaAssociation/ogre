@@ -20,7 +20,7 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	13.6.3
+Version:	14.0.0
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -28,7 +28,7 @@ Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
 # Make sure the version here is in sync with
 # Components/Overlay/CMakeLists.txt
-Source1:        https://github.com/ocornut/imgui/archive/v1.87/imgui-1.87.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.87/imgui-1.89.7.tar.gz
 
 Patch1:		ogre-1.12.9-compile.patch
 Patch2:		ogre-13.2.4-linkage.patch
@@ -250,7 +250,7 @@ find %{buildroot} -size 0 -delete
 %{_libdir}/%{oname}/*.so.%{major}*
 %{_libdir}/%{oname}/*.so
 %{_libdir}/libOgreBitesQt.so.%{major}
-%dir %{_datadir}/%{oname}
+#dir %{_datadir}/%{oname}
 
 %files -n python-ogre
 %{python_sitelib}/Ogre
@@ -299,11 +299,11 @@ find %{buildroot} -size 0 -delete
 
 %files samples
 %doc AUTHORS
-%{_datadir}/%{oname}/GLX_backdrop.png
+%{_datadir}/OGRE-*.*/GLX_backdrop.png
 %{_bindir}/SampleBrowser
-%{_datadir}/%{oname}/*.cfg
-%{_datadir}/%{oname}/Media
+%{_datadir}//OGRE-*.*/Media/
 %{_libdir}/%{oname}/Samples
+%{_datadir}/OGRE-*.*/*.cfg
 
 %files docs
 %doc AUTHORS
