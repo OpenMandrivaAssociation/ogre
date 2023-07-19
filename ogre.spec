@@ -20,7 +20,7 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	14.0.0
+Version:	14.0.1
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
