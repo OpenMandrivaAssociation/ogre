@@ -2,15 +2,24 @@
 ################################################################################
 # !!! Never backport this package as it requires full rebuild of all based games
 ################################################################################
-%define	libmain %mklibname OgreMain %{version}
-%define	libpag %mklibname OgrePaging %{version}
-%define	libprop %mklibname OgreProperty %{version}
-%define	librtss %mklibname OgreRTShaderSystem %{version}
-%define	libterr %mklibname OgreTerrain %{version}
-%define	libolay %mklibname OgreOverlay %{version}
-%define	libvolm %mklibname OgreVolume %{version}
-%define	libbites %mklibname OgreBites %{version}
-%define	libmeshload %mklibname MeshLodGenerator %{version}
+%define	libmain %mklibname OgreMain
+%define	libpag %mklibname OgrePaging
+%define	libprop %mklibname OgreProperty
+%define	librtss %mklibname OgreRTShaderSystem
+%define	libterr %mklibname OgreTerrain
+%define	libolay %mklibname OgreOverlay
+%define	libvolm %mklibname OgreVolume
+%define	libbites %mklibname OgreBites
+%define	libmeshload %mklibname MeshLodGenerator
+%define	oldlibmain %mklibname OgreMain %{version}
+%define	oldlibpag %mklibname OgrePaging %{version}
+%define	oldlibprop %mklibname OgreProperty %{version}
+%define	oldlibrtss %mklibname OgreRTShaderSystem %{version}
+%define	oldlibterr %mklibname OgreTerrain %{version}
+%define	oldlibolay %mklibname OgreOverlay %{version}
+%define	oldlibvolm %mklibname OgreVolume %{version}
+%define	oldlibbites %mklibname OgreBites %{version}
+%define	oldlibmeshload %mklibname MeshLodGenerator %{version}
 %define	devname %mklibname %{name} -d
 %define	filever %(echo v%{version}| tr . -)
 %global optflags %{optflags} -I%{_includedir}/SDL2 -fno-strict-aliasing
@@ -87,6 +96,7 @@ objects and other intuitive classes.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Obsoletes:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibmain}
 
 %description -n %{libmain}
 This package contains a shared library for %{name}.
@@ -95,6 +105,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibpag}
 
 %description -n %{libpag}
 This package contains a shared library for %{name}.
@@ -103,6 +114,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibprop}
 
 %description -n %{libprop}
 This package contains a shared library for %{name}.
@@ -111,6 +123,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibrtss}
 
 %description -n %{librtss}
 This package contains a shared library for %{name}.
@@ -119,6 +132,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibterr}
 
 %description -n %{libterr}
 This package contains a shared library for %{name}.
@@ -127,6 +141,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibolay}
 
 %description -n %{libolay}
 This package contains a shared library for %{name}.
@@ -135,6 +150,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibvolm}
 
 %description -n %{libvolm}
 This package contains a shared library for %{name}.
@@ -143,6 +159,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibbites}
 
 %description -n %{libbites}
 This package contains a shared library for %{name}.
@@ -151,6 +168,7 @@ This package contains a shared library for %{name}.
 Summary:	Libraries needed for programs using %{oname}
 Group:		System/Libraries
 Conflicts:	%{_lib}ogre1_8_1 < 1.8.1-2
+%rename %{oldlibmeshload}
 
 %description -n %{libmeshload}
 This package contains a shared library for %{name}.
