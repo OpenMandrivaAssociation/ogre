@@ -37,7 +37,7 @@ Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
 # Make sure the version here is in sync with
 # Components/Overlay/CMakeLists.txt
-Source1:        https://github.com/ocornut/imgui/archive/v1.89/imgui-1.89.8.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/v1.90/imgui-1.90.4.tar.gz
 
 Patch1:		ogre-1.12.9-compile.patch
 Patch2:		ogre-13.2.4-linkage.patch
