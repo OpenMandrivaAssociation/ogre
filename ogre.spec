@@ -27,6 +27,11 @@
 
 %define major %(echo %{version} |cut -d. -f1-2)
 
+# Make sure the version here is in sync with
+# Components/Overlay/CMakeLists.txt
+%define	imgui_ver 1.90.4
+%define imgui_short_ver %(echo %imgui_ver | cut -d. -f1-2)
+
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
 Version:	14.2.2
@@ -35,9 +40,7 @@ License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.ogre3d.org/
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-# Make sure the version here is in sync with
-# Components/Overlay/CMakeLists.txt
-Source1:        https://github.com/ocornut/imgui/archive/v1.90/imgui-1.90.4.tar.gz
+Source1:        https://github.com/ocornut/imgui/archive/%{imgui_short_ver}/imgui-%{imgui_ver}.tar.gz
 
 Patch1:		ogre-1.12.9-compile.patch
 Patch2:		ogre-13.2.4-linkage.patch
@@ -213,7 +216,7 @@ Docs for %{oname}.
 %prep
 %autosetup -p1 -a1
 mkdir build
-mv imgui-* build/
+mv imgui-%{imgui_short_ver} build/imgui-%{imgui_ver}
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 
