@@ -29,7 +29,7 @@
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	14.2.0
+Version:	14.2.2
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
@@ -66,7 +66,6 @@ BuildRequires:  pkgconfig(OpenEXR)
 BuildRequires:  pkgconfig(python)
 BuildRequires:  pkgconfig(sdl2)
 BuildRequires:	pkgconfig(x11)
-BuildRequires:	pkgconfig(xaw7)
 BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(zziplib)
@@ -317,13 +316,12 @@ find %{buildroot} -size 0 -delete
 
 %files samples
 %doc AUTHORS
-%{_datadir}/OGRE-*.*/GLX_backdrop.png
 %{_bindir}/SampleBrowser
 %{_datadir}//OGRE-*.*/Media/
 %{_libdir}/%{oname}/Samples
 %{_datadir}/OGRE-*.*/*.cfg
 
 %files docs
-%doc AUTHORS
+#doc AUTHORS
 %{_docdir}/%{oname}/
 
