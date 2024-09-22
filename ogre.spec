@@ -216,7 +216,7 @@ Docs for %{oname}.
 %prep
 %autosetup -p1 -a1
 mkdir build
-mv imgui-%{imgui_short_ver} build/imgui-%{imgui_ver}
+mv imgui-%{imgui_ver} build/imgui-%{imgui_ver}
 
 find . -type f -name "*.h"-o -name "*.cpp" -exec chmod 644 {} \;
 
