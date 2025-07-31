@@ -29,12 +29,12 @@
 
 # Make sure the version here is in sync with
 # Components/Overlay/CMakeLists.txt
-%define	imgui_ver 1.91.2
+%define	imgui_ver 1.91.9b
 %define imgui_short_ver %(echo %imgui_ver | cut -d. -f1-2)
 
 Summary:	Object-Oriented Graphics Rendering Engine
 Name:		ogre
-Version:	14.3.4
+Version:	14.4.0
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
